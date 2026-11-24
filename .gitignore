@@ -7,3 +7,22 @@
 .DS_Store
 Thumbs.db
 desktop.ini
+
+# Obsidian local plugins
+.obsidian/plugins/
+.obsidian/community-plugins.json
+
+# Credentials and sensitive files
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+credentials.json
+secrets.json
+
+# Runtime files
+*.log
+*.lock
