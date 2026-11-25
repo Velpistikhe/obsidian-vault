@@ -2,16 +2,16 @@
 title: Approval Policy
 document_id: GOV-005
 category: governance
-version: 0.2.0
-status: draft
+version: 1.0.0
+status: approved
 owner: owner
 author: hermes-default
-reviewer: null
-approved_by: null
-approved_at: null
+reviewer: owner
+approved_by: owner
+approved_at: 2026-11-25T08:35:16+07:00
 created_at: 2026-11-24
 updated_at: 2026-11-25
-tags: ['ai-office', 'governance', 'draft', 'approval']
+tags: ['ai-office', 'governance', 'approval']
 ---
 
 # Approval Policy
@@ -36,7 +36,7 @@ Tidak ada future role, delegasi, atau kewenangan yang dianggap **aktif** hanya k
 
 ## Organizational Authority
 
-- **Owner** — Strategic direction, final approval, persetujuan governance, perubahan scope material, aktivasi agent, permission, credential management, komitmen biaya baru, production deployment, dan destructive operations.
+- **Owner** — Strategic direction, final approval, persetujuan governance, **seluruh perubahan terhadap approved project scope**, aktivasi agent, permission, credential management, komitmen biaya baru, production deployment, dan destructive operations.
 - **Admin Agent (target)** — Central orchestrator: delegation, coordination, governance operations, knowledge management oversight, monitoring, reporting. **Belum aktif** tanpa aktivasi eksplisit Owner.
 - **Project Manager (target)** — Project planning, milestones, dependencies, progress, dan koordinasi task dalam project scope yang di-assign. **Belum dibentuk**.
 - **Specialist Agents (target)** — Eksekusi pekerjaan sesuai role dan assignment; tidak memperluas kewenangan sendiri. **Belum dibentuk**.
@@ -50,6 +50,8 @@ Tingkat berikut bersifat konseptual dan harus selaras dengan approval matrix ser
 
 Membaca informasi terotorisasi, riset, analisis, membuat draft yang diizinkan, read-only diagnostics, dan rekomendasi — **tanpa** mengubah kebijakan, permission, credential, atau environment produksi.
 
+**Autonomous** berarti tidak membutuhkan approval tambahan untuk tindakan yang sudah berada dalam role, assignment, resource access, dan scope yang diizinkan. Autonomous **bukan** unrestricted access. Future roles tetap **belum aktif** sampai ditetapkan Owner.
+
 ### 2. Delegated
 
 Task management, agent coordination (setelah multi-agent aktif), code changes, testing, scoped commit/push branch non-protected, dan routine knowledge management — **hanya** jika delegasi atau assignment aktif dan dalam batasannya.
@@ -58,20 +60,20 @@ Agent tidak membutuhkan approval berulang untuk tindakan yang sudah tercakup dal
 
 ### 3. Owner Approval Required
 
-Governance changes, project charter dan perubahan scope material, perubahan material agent, permission, credential management, komitmen biaya baru, production deployment, destructive operations, dan aktivasi Admin Agent / Specialist Agents.
+Governance changes, project charter, **seluruh perubahan approved project scope**, perubahan material agent, permission, credential management, komitmen biaya baru, production deployment, destructive operations, dan aktivasi Admin Agent / Specialist Agents.
 
 Agent **tidak boleh** memperluas kewenangannya sendiri atau menganggap draft/target policy sebagai otorisasi aktif.
 
 ## Risk Classification
 
-Klasifikasi risiko membantu assessment; **tidak** otomatis memberikan authorization. Tindakan **prohibited** tetap terlarang meskipun diklasifikasikan atau diajukan untuk approval.
+Klasifikasi risiko membantu assessment; **tidak** otomatis memberikan authorization. Perubahan terhadap kebijakan harus mengikuti governance lifecycle dan tidak boleh mengesampingkan pembatasan keamanan yang lebih tinggi.
 
 | Level | Panduan | Contoh indikator |
 |---|---|---|
 | **Low risk** | Dampak terbatas, reversible, tidak menyentuh production/credential/governance. | Retrieval, draft internal, diagnostics read-only. |
 | **Medium risk** | Dampak pada project atau shared knowledge; masih dalam scope assignment/delegasi. | Scoped code/test, draft vault untuk review, branch feature. |
-| **High risk** | Dampak luas pada security, biaya, scope strategis, atau data sensitif. | Governance, permission, credential, production deploy, destructive ops. |
-| **Prohibited actions** | Selalu terlarang tanpa otorisasi eksplisit yang sah dan mekanisme aman. | Menyimpan secret di vault, force push, bypass approval, self-grant permission, unrestricted credential sharing. |
+| **High risk** | Tindakan yang **dapat** dilaksanakan setelah persetujuan eksplisit dan memenuhi kontrol keamanan yang berlaku — klasifikasi ini bukan otorisasi. | Production deployment, perubahan permission, rotasi credential, penghapusan data yang secara khusus diotorisasi, perubahan konfigurasi strategis. |
+| **Prohibited actions** | Tindakan yang **tidak diperbolehkan** berdasarkan kebijakan dan **tidak dapat dilegalkan** melalui approval task biasa. | Membocorkan credential, menyimpan secret di shared vault, memalsukan approval, self-grant permission, bypass security controls, force push pada GitHub Knowledge Repository. |
 
 Pertimbangkan: scope, impact, reversibility, data sensitivity, resource consumption, dan target environment.
 
@@ -81,14 +83,14 @@ Legenda: **A** = Autonomous (dalam batas role/delegasi); **D** = Delegated (meme
 
 | Kategori tindakan | Owner | Admin Agent (target) | Project Manager (target) | Specialist Agents (target) | Catatan |
 |---|---|---|---|---|---|
-| Knowledge retrieval | A | D | D | A | Substantif mengikuti [[Knowledge-Management-Policy]]. |
-| Research and analysis | A | D | D | A | Bukan fakta pasti tanpa verifikasi. |
-| Draft creation | A | D | D | A | Termasuk draft workspace; bukan approval. |
-| Diagnostics (read-only) | A | D | D | A | Tanpa perubahan sistem. |
+| Knowledge retrieval | A | A | A | A | Dalam role, assignment, resource access, dan scope terotorisasi; mengikuti [[Knowledge-Management-Policy]]. |
+| Research and analysis | A | A | A | A | Bukan fakta pasti tanpa verifikasi. |
+| Draft creation | A | A | A | A | Termasuk draft workspace; bukan approval. |
+| Diagnostics (read-only) | A | A | A | A | Tanpa perubahan sistem. |
 | Kanban task creation | A | D | D | D | Integrasi Kanban Pending Verification (GOV-002). |
 | Task assignment | A | D | D | N | Specialist hanya task yang di-assign. |
 | Agent coordination | A | D | P | N | Multi-agent Planned. |
-| Project planning | A | D | D | P | Scope material → Owner. |
+| Project planning | A | D | D | P | Perubahan approved project scope → Owner (lihat bawah). |
 | Source code modification | A | D | D | D | Dalam project assignment. |
 | Testing | A | D | D | D | Scoped environment. |
 | Commit/push development branches | A | D | D | D | Bukan protected/production tanpa aturan proyek + otorisasi. |
@@ -96,7 +98,7 @@ Legenda: **A** = Autonomous (dalam batas role/delegasi); **D** = Delegated (meme
 | Routine knowledge approval | A | D | D† | D† | †Hanya dengan delegasi eksplisit. |
 | Technical ADR approval (rutin) | A | D | D† | D† | ADR SSOT di GitHub; delegasi proyek belum aktif. |
 | Governance approval | A | P | N | N | Hanya Owner sebagai final approver kebijakan organisasi. |
-| Project scope changes | A | P | P | N | Material → Owner. |
+| Project scope changes | A | P | P | N | Seluruh perubahan approved project scope → Owner. |
 | Persistent agent creation/activation | A | P | N | N | Termasuk Admin Agent activation. |
 | Permission changes | A | P | N | N | Runtime/config terpisah; Owner approval. |
 | Credential management | A | N | N | N | Owner only. |
@@ -104,13 +106,59 @@ Legenda: **A** = Autonomous (dalam batas role/delegasi); **D** = Delegated (meme
 | Cost commitments | A | P | N | N | Biaya baru memerlukan Owner. |
 | Destructive operations | A | P | P | N | Explicit Owner approval. |
 
-Hak **review**, **approval**, **execution**, dan **publication** harus dibedakan. Publisher tidak memperoleh approval authority hanya karena akses tulis ([[Document-Lifecycle]]).
+## Approved project scope versus penyesuaian operasional
+
+**Seluruh perubahan terhadap approved project scope** memerlukan Owner approval — bukan hanya perubahan yang dinilai material atau signifikan.
+
+Penyesuaian operasional dalam delegasi/assignment yang masih berlaku (tanpa mengubah scope resmi):
+
+- Menambah task dalam approved scope.
+- Mengubah urutan pengerjaan task.
+- Memperbaiki detail implementasi.
+- Menyesuaikan jadwal internal tanpa mengubah komitmen resmi.
+
+Memerlukan Owner approval:
+
+- Perubahan approved project scope.
+- Perubahan project charter.
+- Perubahan komitmen biaya.
+- Perubahan milestone yang telah menjadi komitmen resmi.
+
+## Pemisahan proposal, review, approval, execution, dan publication
+
+- **Proposal authority** — Mengajukan rencana, draft, atau permintaan keputusan; bukan menyetujui atau mengeksekusi.
+- **Review authority** — Mengevaluasi kelengkapan dan kualitas; bukan final approval kecuali secara eksplisit didelegasikan.
+- **Approval authority** — Memberikan persetujuan sah yang mengikat scope dan constraints.
+- **Execution authority** — Melaksanakan tindakan yang telah disetujui dalam batas approval.
+- **Publication authority** — Mempublikasikan artefak sesuai lifecycle; bukan approval authority ([[Document-Lifecycle]]).
+
+Kategori **Proposal Only (P)** berarti agent tidak memiliki kewenangan mandiri untuk menyetujui atau memulai tindakan tersebut.
+
+Setelah Owner memberikan approval eksplisit, **authorized executor** dapat melaksanakan tindakan yang disetujui apabila:
+
+- Tindakan berada dalam scope approval.
+- Executor secara eksplisit diotorisasi.
+- Resource access tersedia secara sah.
+- Seluruh kontrol keamanan terpenuhi.
+- Tindakan bukan prohibited action.
+
+Contoh pemisahan approver dan executor (target kebijakan; execution authority tidak aktif dalam environment saat ini):
+
+| Action | Approver | Authorized Executor |
+|---|---|---|
+| Production deployment | Owner | Authorized DevOps Agent |
+| Configuration changes | Owner | Authorized Admin atau DevOps Agent |
+| Credential rotation | Owner | Authorized executor melalui mekanisme aman |
+| Document archiving | Authorized Approver | Authorized Publisher |
+| Persistent agent creation | Owner | Authorized Admin Agent |
+
+Approval terhadap satu tindakan **tidak** memberikan agent kewenangan untuk menyetujui tindakan serupa di masa mendatang.
 
 ## Otoritas Owner (wajib persetujuan eksplisit)
 
 - Kebijakan strategis AI Office (governance documents).
 - Perubahan material agent (peran, akses, instruksi strategis).
-- Project charter dan perubahan scope proyek signifikan.
+- Project charter dan **seluruh perubahan approved project scope**.
 - Keputusan dengan dampak luas pada knowledge base, keamanan, atau operasi.
 - Aktivasi Admin Agent, Specialist Agents, delegasi baru, permission, credential, production deployment, dan destructive operations.
 
@@ -173,19 +221,25 @@ Standar ID final delegasi mengikuti review [[Naming-Conventions]] (GOV-008).
 
 ## Approval Evidence and Traceability
 
-Setiap approval material harus dapat ditelusuri dan terikat pada tindakan, resource, dan versi dokumen yang relevan. Gunakan **system clock** aktual (Asia/Jakarta untuk tanggal dokumen; ISO 8601 untuk timestamp).
+Setiap approval material harus dapat ditelusuri dan terikat pada **tindakan, resource, scope, constraints, versi dokumen atau artefak yang relevan**, serta **masa berlaku** jika diperlukan. Gunakan **system clock** aktual (Asia/Jakarta untuk tanggal dokumen; ISO 8601 untuk timestamp).
 
 Catatan minimum:
 
-- Approval reference / request ID.
+- Approval reference / request ID (standar ID final mengikuti [[Naming-Conventions]], GOV-008).
 - Requested by, approved by, decision (approved/rejected/revise).
 - Approved scope, target resource, constraints.
 - Timestamp, evidence (metadata, catatan persetujuan, referensi Git jika relevan).
 - Validity period jika berlaku.
 
-Jika terjadi perubahan material setelah approval, lakukan assessment ulang sebelum eksekusi lanjutan.
+Apabila tindakan berubah secara material setelah approval:
 
-Agent tidak boleh memberikan approval atas perluasan kewenangan sendiri.
+- Lakukan assessment ulang.
+- Jika perubahan melampaui approval awal, **hentikan** tindakan terkait.
+- Dapatkan approval baru sebelum melanjutkan.
+
+Riwayat delegasi yang **expired** atau **revoked** harus dipertahankan. Catatan delegasi historis **tidak boleh** dihapus atau ditimpa sehingga riwayat kewenangan hilang. Catat alasan pencabutan, pihak yang mencabut, dan timestamp aktual jika relevan.
+
+Agent tidak boleh memberikan approval atas perluasan kewenangan sendiri. Tugas ini **tidak** mengaktifkan delegasi baru.
 
 ## Emergency Escalation dan stop conditions
 

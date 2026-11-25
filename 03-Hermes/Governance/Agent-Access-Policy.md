@@ -2,16 +2,16 @@
 title: Agent Access Policy
 document_id: GOV-006
 category: governance
-version: 0.2.0
-status: draft
+version: 1.0.0
+status: approved
 owner: owner
 author: hermes-default
-reviewer: null
-approved_by: null
-approved_at: null
+reviewer: owner
+approved_by: owner
+approved_at: 2026-11-25T08:35:16+07:00
 created_at: 2026-11-24
 updated_at: 2026-11-25
-tags: ['ai-office', 'governance', 'draft', 'agents', 'access']
+tags: ['ai-office', 'governance', 'agents', 'access']
 ---
 
 # Agent Access Policy
@@ -48,14 +48,16 @@ Bedakan **organizational authority** (kebijakan) dari **technical access** (runt
 
 ## Four Control Layers
 
-Seluruh lapisan yang relevan harus terpenuhi sebelum tindakan berisiko:
+Empat lapisan kontrol berlaku untuk **seluruh tindakan yang melibatkan resource atau tool**, bukan hanya tindakan berisiko tinggi:
 
 1. **Governance authorization** — GOV-005/006 dan dokumen approved terkait.
 2. **Agent operational instructions** — Skills, workflow (mis. knowledge-sync), task scope.
 3. **Tool and command permissions** — Konfigurasi Hermes, profile, command approval — **Pending Verification**.
 4. **Technical runtime enforcement** — Filesystem ACL, multi-agent coordination — **Planned** / belum lengkap.
 
-Instruksi governance atau skills **bukan** bukti layer 3–4 aktif.
+Seluruh lapisan yang relevan harus terpenuhi sebelum tindakan dilakukan. **Read-only actions** tetap membutuhkan resource authorization. Tidak semua tindakan memerlukan approval manual apabila sudah tercakup dalam authorization aktif.
+
+Jangan menganggap akses teknis sebagai governance approval. Jangan menganggap governance approval dapat melewati pembatasan keamanan atau runtime. Instruksi governance atau skills **bukan** bukti layer 3–4 aktif. Status implementasi aktual mengikuti [[Information-Architecture]] (GOV-002).
 
 ## Role-Based Resource Access (target matrix)
 
@@ -67,7 +69,7 @@ Legenda: **R** read, **W** write, **X** execute, **M** manage, **S** scoped, **P
 | Governance documents | M | S-R / P edit | R | R |
 | Agent Registry | M | S-W | R | R |
 | Shared Workspace | M | S-W | S-W | S-W |
-| GitHub Project Repository | M | S-W | S-W | S-X scoped |
+| GitHub Project Repository | M | S-R/W‡ | S-R‡ | S-R/W‡ |
 | Git branches (non-protected) | M | S-W | S-W | S-W |
 | Git protected/production branches | M | P | P | — |
 | Hermes Kanban | M | S-M* | S-W | S-W |
@@ -77,9 +79,15 @@ Legenda: **R** read, **W** write, **X** execute, **M** manage, **S** scoped, **P
 | Skills (modify) | M | P | — | — |
 | Profiles / runtime config | M | P | — | — |
 | External tools | M | S-X scoped | S-X scoped | S-X scoped |
-| Credentials | M | — | — | — |
+| Credential management | M | P | P | P |
+| Authorized credential usage | M | S-X | S-X | S-X scoped |
+| Raw secret access | M | — | — | — |
 
 \*Setelah aktivasi resmi dan otorisasi vault writer; saat ini publish vault: Hermes default saja.
+
+‡Batas maksimum akses GitHub Project Repository berdasarkan role dan assignment (lihat bagian Workspace and Project Repository). Matriks ini adalah **target kebijakan**, bukan bukti repository permissions telah diterapkan.
+
+**Credential management** (creation, rotation, revocation, perubahan permission) membutuhkan Owner authorization; agent hanya sebagai authorized executor jika diotorisasi khusus. **Authorized credential usage** melalui tools/runtime tidak otomatis memberikan raw secret access.
 
 ## Shared Knowledge Access
 
@@ -97,6 +105,20 @@ Target branch strategy (contoh; aktual per proyek):
 - `main`, `develop`, feature branches, fix branches.
 
 Protected branches dan merge restrictions harus diimplementasikan dan **diverifikasi terpisah** di masing-masing repository. Tugas ini **tidak** mengubah project Akura atau repository settings.
+
+Batas maksimum akses **GitHub Project Repository** berdasarkan role dan assignment (target; Specialist sub-role memerlukan assignment eksplisit):
+
+| Role / agent type | Akses maksimum |
+|---|---|
+| Admin Agent (target) | Scoped read/write jika diperlukan |
+| Project Manager (target) | Scoped read; write hanya jika secara khusus diperlukan |
+| Developer Agents (target) | Scoped read/write pada assigned project dan branch |
+| QA Agents (target) | Scoped read/execute; write untuk test files jika diperlukan |
+| DevOps Agents (target) | Scoped read/write sesuai authorized assignment |
+| Technical Reviewers (target) | Scoped read dan review |
+| Research Agents (target) | Scoped read jika diperlukan |
+
+Specialist Agents **tidak** otomatis mendapat write access hanya karena memiliki role Specialist. Repository access harus konsisten dengan branch permissions, task assignment, dan [[Approval-Policy]]. Protected branch modification, merge restrictions, dan production access mengikuti kebijakan proyek dan authorization yang berlaku.
 
 ## Kanban Access
 
@@ -144,11 +166,19 @@ Hermes Command Approval dan permission per profile — **Pending Verification**;
 
 ## Credential and Secret Handling
 
-- Least-privilege credential access; use hanya untuk pekerjaan terotorisasi.
-- Jangan menampilkan raw secret pada response atau execution report.
-- Jangan menyalin credential ke vault, workspace draft, agent memory, atau task descriptions.
+Bedakan tiga kategori:
+
+1. **Credential management** — Creation, rotation, revocation, dan perubahan permission. Membutuhkan **Owner authorization** ([[Approval-Policy]]). Agent dapat menjadi authorized executor apabila secara khusus diotorisasi dan menggunakan mekanisme aman. Agent **tidak boleh** melakukan credential management secara mandiri.
+2. **Authorized credential usage** — Future Admin Agent, Project Manager, dan Specialist Agents dapat menggunakan configured credentials melalui tools atau runtime sesuai role, assignment, resource scope, dan otorisasi. Penggunaan credential **tidak** otomatis memberikan akses terhadap nilai raw secret.
+3. **Raw secret access** — Restricted dan **deny by default** untuk agent.
+
+Utamakan penggunaan credential melalui mekanisme yang sesuai, misalnya configured SSH authentication, environment-based authentication, authorized tool authentication, dan secret storage mechanism — **tanpa** mengklaim mekanisme tersebut sudah menyediakan isolasi teknis yang terverifikasi.
+
+Larangan tetap berlaku:
+
+- Jangan menampilkan, menyalin, atau mempublikasikan raw secrets ke response, vault, workspace drafts, agent memory, atau task descriptions.
 - Jangan membagikan credential antar-agent tanpa otorisasi dan mekanisme aman.
-- Creation, rotation, revocation, permission changes credential → **Owner authorization** ([[Approval-Policy]]).
+- Least-privilege credential usage hanya untuk pekerjaan terotorisasi.
 
 ## Agent-to-Agent Communication
 
@@ -159,10 +189,19 @@ Komunikasi dibatasi oleh role, scope, assignment, dan kebutuhan pekerjaan. Pesan
 Penghentian atau pembatasan akses apabila:
 
 - Assignment selesai, delegasi berakhir/dicabut, agent dinonaktifkan.
-- Project scope berubah material.
+- Approved project scope berubah sesuai keputusan Owner.
 - Insiden keamanan memerlukan pembatasan.
 
-Bedakan **revocation kebijakan** (Owner/delegator) dari **technical revocation** (config/runtime) — yang terakhir Pending Verification/Planned.
+Ketika delegasi dicabut atau berakhir, agent harus:
+
+- Menghentikan tindakan terkait delegasi tersebut.
+- Menghentikan sub-delegation yang bergantung pada delegasi tersebut.
+- Menghentikan pekerjaan aktif secara aman tanpa menimbulkan kerusakan tambahan.
+- Mencabut akses teknis melalui mekanisme terotorisasi apabila diperlukan.
+- Melaporkan hasil pencabutan dan akses yang masih tersisa kepada Owner.
+- Mempertahankan riwayat delegasi dan revocation (mengikuti [[Approval-Policy]]).
+
+Bedakan **organizational revocation** (kebijakan/delegator) dari **technical revocation** (credential, session, filesystem, repository permissions). Pencabutan authorization dalam dokumen **tidak menjamin** credential, session, filesystem access, atau repository permissions telah dinonaktifkan. Centralized revocation atau emergency stop — **belum diimplementasikan**. Technical revocation — Pending Verification/Planned. Tugas ini **tidak** melakukan perubahan akses aktual.
 
 ## Audit and Execution Logging
 
