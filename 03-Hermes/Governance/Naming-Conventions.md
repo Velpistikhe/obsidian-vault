@@ -9,8 +9,8 @@ author: hermes-default
 reviewer: null
 approved_by: null
 approved_at: null
-created_at: 2025-11-24
-updated_at: 2025-11-24
+created_at: 2026-11-24
+updated_at: 2026-11-25
 tags: ['ai-office', 'governance', 'draft', 'naming']
 ---
 
@@ -43,6 +43,29 @@ Field standar: `title`, `document_id`, `category`, `version`, `status`, `owner`,
 - `owner`: default `owner` untuk fondasi AI Office.
 - `author`: `hermes-default` bila dibuat oleh agent default.
 - `status`: ikuti [[Document-Lifecycle]].
+
+## Date & Time Conventions
+
+Standar ini merupakan bagian dari dokumen draft dan belum dianggap sebagai kebijakan yang disetujui.
+
+- Zona waktu organisasi: `Asia/Jakarta`.
+- Zona waktu server: `UTC`.
+- Format tanggal dokumen: `YYYY-MM-DD`.
+- Format timestamp: ISO 8601 dengan informasi zona waktu.
+- Log eksekusi teknis menggunakan UTC.
+- Deadline proyek menggunakan `Asia/Jakarta`.
+- Agent wajib menggunakan system clock ketika menghasilkan tanggal atau timestamp aktual; jangan menggunakan tanggal berdasarkan asumsi internal model.
+- `created_at` adalah tanggal pembuatan awal dan tidak berubah, kecuali untuk koreksi metadata yang terbukti salah.
+- `updated_at` adalah tanggal perubahan terakhir.
+- `approved_at` hanya diisi setelah persetujuan aktual.
+
+Contoh command untuk membaca tanggal dan timestamp aktual:
+
+```bash
+date -u +'%Y-%m-%dT%H:%M:%SZ'
+TZ=Asia/Jakarta date +%F
+TZ=Asia/Jakarta date --iso-8601=seconds
+```
 
 ## Wikilink
 

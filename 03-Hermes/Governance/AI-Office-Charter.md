@@ -9,8 +9,8 @@ author: hermes-default
 reviewer: null
 approved_by: null
 approved_at: null
-created_at: 2025-11-24
-updated_at: 2025-11-24
+created_at: 2026-11-24
+updated_at: 2026-11-25
 tags: ['ai-office', 'governance', 'draft']
 ---
 
