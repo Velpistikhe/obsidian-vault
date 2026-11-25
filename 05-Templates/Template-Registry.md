@@ -120,7 +120,7 @@ Reservation dilakukan manual dan serial oleh pihak berwenang pada 2026-11-25, se
 
 | template_id | title | category | path | allocation_status | reserved_at | allocated_at | retired_at | authorization_reference |
 |-------------|-------|----------|------|-------------------|-------------|--------------|------------|-------------------------|
-| TPL-010 | Revision Proposal | knowledge-management | 05-Templates/Knowledge-Management/Revision-Proposal.md | reserved | 2026-11-25T21:41:07+07:00 | null | null | 03-Hermes/Governance/Authorization-Evidence/Template-Phase-2-Authorization.md (recorded_at 2026-11-25T21:40:15+07:00; baseline 9510257493e78f0e107449e6d069f4b2e5f2358a) |
+| TPL-010 | Revision Proposal | knowledge-management | 05-Templates/Knowledge-Management/Revision-Proposal.md | allocated | 2026-11-25T21:41:07+07:00 | 2026-11-25T21:43:29+07:00 | null | 03-Hermes/Governance/Authorization-Evidence/Template-Phase-2-Authorization.md (recorded_at 2026-11-25T21:40:15+07:00; baseline 9510257493e78f0e107449e6d069f4b2e5f2358a) |
 
 ### Namespace lain
 
@@ -131,7 +131,7 @@ Namespace `PRJ`, `AGT`, `DEL`, `APR`, `REV`, dan lainnya **belum** punya entri d
 | Komponen | Status |
 |----------|--------|
 | Registry initialization (tanpa entri ID) | **Operational** untuk struktur field dan aturan; belum ada entri alokasi. |
-| Alokasi `TPL-*` aktual | 9 master Project Management (`TPL-001`–`TPL-009`) berstatus **allocated**. |
+| Alokasi `TPL-*` aktual | 10 master (`TPL-001`–`TPL-010`) berstatus **allocated** — 9 Project Management (Phase 1) dan 1 Knowledge Management (Phase 2). |
 | Automatic allocation | **Planned** — belum terverifikasi (GOV-002, GOV-008). |
 | Collision prevention otomatis | **Planned** — belum terverifikasi (GOV-008). |
 | Full-cycle locking / concurrency control | **Planned** — belum diimplementasikan (GOV-002). |
