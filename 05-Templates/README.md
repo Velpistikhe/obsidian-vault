@@ -1,13 +1,13 @@
 ---
 title: Documentation Templates
 category: templates
-version: 0.1.0
-status: draft
+version: 1.0.0
+status: approved
 owner: owner
 author: hermes-default
-reviewer: null
-approved_by: null
-approved_at: null
+reviewer: owner
+approved_by: owner
+approved_at: 2026-11-25T16:22:31+07:00
 created_at: 2026-11-25
 updated_at: 2026-11-25
 tags: ['ai-office', 'templates']
@@ -15,11 +15,11 @@ tags: ['ai-office', 'templates']
 
 # Documentation Templates
 
-> **Catatan frontmatter:** tiga dokumen foundation di folder ini (`README.md`, `Template-Registry.md`, `Template-Standard.md`) **tidak** memiliki `document_id` maupun `template_id`. Menurut [[Naming-Conventions]], `document_id` wajib untuk dokumen terkelola yang **menggunakan organizational identifier**; dokumen foundation tidak memakai namespace tersebut dan tidak boleh menerima ID `TPL` (khusus master template). Namespace identitas untuk dokumen foundation belum ditetapkan — jangan membuat namespace baru tanpa keputusan Owner.
+> **Identitas artefak:** ketiga dokumen foundation (`05-Templates/README.md`, `05-Templates/Template-Registry.md`, `05-Templates/Template-Standard.md`) menggunakan **path vault** sebagai identitas otoritatif. Mereka **tidak** memiliki `document_id` maupun `template_id`. Menurut [[03-Hermes/Governance/Naming-Conventions|Naming Conventions]], `document_id` wajib untuk dokumen terkelola yang menggunakan organizational identifier; namespace `TPL` khusus master template. Persetujuan foundation ini **bukan** persetujuan terhadap master template yang belum dibuat.
 
 ## Fungsi folder
 
-`05-Templates/` menyimpan **master template** serta artefak pendukung navigasi dan registry. Isi instance dokumen hasil pengisian template **tidak** berada di folder ini; lokasi instance mengikuti Target SSOT pada [[Template-Standard]] dan [[Information-Architecture]].
+`05-Templates/` menyimpan **master template** serta artefak pendukung navigasi dan registry. Isi instance dokumen hasil generate dari template **tidak** berada di folder ini; lokasi instance mengikuti Target SSOT pada [[05-Templates/Template-Standard|Template Standard]] dan [[03-Hermes/Governance/Information-Architecture|Information Architecture]].
 
 Artefak foundation:
 
@@ -35,7 +35,9 @@ Keempat README subfolder (`Project-Management`, `Agent-Management`, `Software-De
 
 Seluruh **29 master template masih Planned dan belum dibuat**. Daftar di bawah adalah **katalog rancangan yang telah disetujui Owner**, bukan berkas yang tersedia. Jangan membuat wikilink seolah-olah file template sudah ada — gunakan nama atau path rencana seperti pada tabel.
 
-Master template yang kelak dibuat akan dicatat alokasi ID-nya pada [[Template-Registry]]; katalog ini tidak mencatat alokasi.
+Master template yang kelak dibuat akan dicatat alokasi ID-nya pada [[05-Templates/Template-Registry|Template Registry]]; katalog ini tidak mencatat alokasi.
+
+[[05-Templates/Template-Registry|Template Registry]] **hanya** mengelola namespace `TPL`. Identifier `PRJ`, `AGT`, `DEL`, `APR`, `REV`, dan namespace lain mengikuti [[03-Hermes/Governance/Naming-Conventions|Naming Conventions]] serta registry atau allocation record yang relevan — **belum tersedia** untuk semua namespace. Jangan menggunakan Template Registry sebagai registry seluruh organizational identifiers.
 
 ## Navigation
 
@@ -54,7 +56,7 @@ Master template yang kelak dibuat akan dicatat alokasi ID-nya pada [[Template-Re
 | **Wajib** | Dipersyaratkan governance untuk jenis dokumen atau proyek tertentu. |
 | **Kondisional** | Wajib hanya bila kondisi penggunaannya terpenuhi. |
 | **Pendukung** | Membantu operasi; tidak dipersyaratkan governance. |
-| **Opsional** | Dikecualikan secara eksplisit oleh rancangan katalog. |
+| **Opsional** | Tersedia dalam katalog dan dapat digunakan sesuai kebutuhan pekerjaan; **bukan** persyaratan wajib governance. |
 
 ## Katalog — Project Management (9)
 
@@ -84,7 +86,7 @@ Master template yang kelak dibuat akan dicatat alokasi ID-nya pada [[Template-Re
 
 ## Katalog — Software Development (6)
 
-Master disimpan di vault sebagai **master template**; **instance engineering lengkap tetap berada di GitHub Project Repository** sebagai SSOT ([[Information-Architecture]]). Vault hanya menyimpan master, ringkasan, atau referensi.
+Master disimpan di vault sebagai **master template**; **instance engineering lengkap tetap berada di GitHub Project Repository** sebagai SSOT ([[03-Hermes/Governance/Information-Architecture|Information Architecture]]). Vault hanya menyimpan master, ringkasan, atau referensi.
 
 | # | Template (rencana) | Kebutuhan | Catatan governance |
 |---|--------------------|-----------|--------------------|
@@ -92,7 +94,7 @@ Master disimpan di vault sebagai **master template**; **instance engineering len
 | 2 | `Software-Development/Technical-ADR.md` | Kondisional | ADR detail → repo; review rutin mengikuti delegasi yang aktif (GOV-005). |
 | 3 | `Software-Development/API-Specification.md` | Kondisional | Spesifikasi lengkap → repo (GOV-002). |
 | 4 | `Software-Development/Test-Plan.md` | Kondisional | Strategi/bukti pengujian (GOV-007). |
-| 5 | `Software-Development/Code-Review-Report.md` | Opsional | Dikecualikan secara eksplisit oleh rancangan katalog. |
+| 5 | `Software-Development/Code-Review-Report.md` | Opsional | Dapat digunakan bila dibutuhkan; tidak wajib governance. |
 | 6 | `Software-Development/Deployment-Plan.md` | Kondisional | Production deployment → Owner approval (GOV-005). |
 
 ## Katalog — Knowledge Management (7)
@@ -109,32 +111,44 @@ Master disimpan di vault sebagai **master template**; **instance engineering len
 
 ## Usage instructions
 
-1. Salin master ke lokasi instance; **jangan** mengedit master saat mengisi instance.
-2. Gunakan master berstatus `approved` untuk penggunaan resmi; master `draft` hanya untuk review atau simulasi terotorisasi.
-3. Pengisian template **tidak** memberikan approval, assignment, delegasi, atau permission apa pun.
-4. Pengisian template **tidak** mengalokasikan ID; ID hanya dialokasikan melalui workflow terotorisasi pada [[Template-Registry]] (GOV-008).
-5. Approval pada master **tidak** diwariskan ke instance yang dihasilkan.
-6. Jangan menyimpan kredensial atau raw secret.
-7. Validation checklist dilakukan **manual** sampai automated validation terverifikasi.
-8. Detail metadata, struktur universal, dan pemisahan lifecycle: [[Template-Standard]].
+### Generate from template (bukan salin seluruh master)
+
+1. Baca master template berstatus `approved`.
+2. Ekstrak **generated metadata blueprint** dari body master.
+3. Ekstrak **Required Sections** dan **Optional Sections** yang berlaku.
+4. Isi metadata dan konten instance berdasarkan **fakta aktual** — jangan menyalin frontmatter master, approval master, Usage Instructions, atau Validation Checklist internal master.
+5. Validasi instance sebelum publikasi (checklist manual).
+6. Simpan instance pada **Target SSOT** yang ditetapkan master.
+
+**Jangan** mengubah master ketika menghasilkan instance.
+
+### Aturan umum
+
+1. Gunakan master `approved` untuk penggunaan resmi; master `draft` hanya untuk review atau simulasi terotorisasi.
+2. Generate dari template **tidak** memberikan approval, assignment, delegasi, atau permission.
+3. Generate **tidak** mengalokasikan ID; ID hanya melalui workflow terotorisasi ([[05-Templates/Template-Registry|Template Registry]] untuk `TPL`; namespace lain sesuai GOV-008).
+4. Approval master **tidak** diwariskan ke instance.
+5. Jangan menyimpan kredensial atau raw secret.
+6. Validation checklist **manual** sampai automated validation terverifikasi.
+7. Detail struktur, metadata, lifecycle: [[05-Templates/Template-Standard|Template Standard]].
 
 ## Governance references
 
-- [[AI-Office-Charter]] (GOV-001)
-- [[Information-Architecture]] (GOV-002) — SSOT instance dan repository
-- [[Knowledge-Management-Policy]] (GOV-003)
-- [[Document-Lifecycle]] (GOV-004) — status dokumen, revisi, approval
-- [[Approval-Policy]] (GOV-005) — kewenangan approval dan delegasi
-- [[Agent-Access-Policy]] (GOV-006) — akses dan larangan agent
-- [[Project-Registration-Standard]] (GOV-007) — field registrasi dan aktivasi proyek
-- [[Naming-Conventions]] (GOV-008) — identifier, metadata, penamaan, date & time
+- [[03-Hermes/Governance/AI-Office-Charter|AI Office Charter]] (GOV-001)
+- [[03-Hermes/Governance/Information-Architecture|Information Architecture]] (GOV-002)
+- [[03-Hermes/Governance/Knowledge-Management-Policy|Knowledge Management Policy]] (GOV-003)
+- [[03-Hermes/Governance/Document-Lifecycle|Document Lifecycle]] (GOV-004)
+- [[03-Hermes/Governance/Approval-Policy|Approval Policy]] (GOV-005)
+- [[03-Hermes/Governance/Agent-Access-Policy|Agent Access Policy]] (GOV-006)
+- [[03-Hermes/Governance/Project-Registration-Standard|Project Registration Standard]] (GOV-007)
+- [[03-Hermes/Governance/Naming-Conventions|Naming Conventions]] (GOV-008)
 
 ## Status implementasi
 
 | Kemampuan | Status |
 |-----------|--------|
-| Dokumen foundation (README, Registry, Standard) | Dibuat pada Phase 0 — draft. |
+| Dokumen foundation (README, Registry, Standard) | **Approved** v1.0.0. |
 | 29 master template | **Planned** — belum dibuat. |
-| Alokasi ID `TPL-*` | **Belum ada** — lihat [[Template-Registry]]. |
+| Alokasi ID `TPL-*` | **Belum ada** — lihat [[05-Templates/Template-Registry|Template Registry]]. |
 | Automatic allocation / collision prevention | **Planned** atau belum terverifikasi (GOV-002, GOV-008). |
 | Metadata schema validation otomatis | **Planned** (GOV-002). |

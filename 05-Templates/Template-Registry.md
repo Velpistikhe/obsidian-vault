@@ -1,13 +1,13 @@
 ---
 title: Template Registry
 category: templates
-version: 0.1.0
-status: draft
+version: 1.0.0
+status: approved
 owner: owner
 author: hermes-default
-reviewer: null
-approved_by: null
-approved_at: null
+reviewer: owner
+approved_by: owner
+approved_at: 2026-11-25T16:22:31+07:00
 created_at: 2026-11-25
 updated_at: 2026-11-25
 tags: ['ai-office', 'templates', 'registry']
@@ -15,13 +15,15 @@ tags: ['ai-office', 'templates', 'registry']
 
 # Template Registry
 
-> **Catatan frontmatter:** berkas ini adalah registry artifact, bukan master template, sehingga **tidak** menerima `template_id` maupun `document_id` (lihat [[README|05-Templates README]]). `document_id` hanya diwajibkan untuk dokumen terkelola yang menggunakan organizational identifier.
+> **Identitas artefak:** berkas ini adalah registry artifact, bukan master template; identitas otoritatif = path `05-Templates/Template-Registry.md`. **Tidak** memiliki `template_id` maupun `document_id`. Lihat [[05-Templates/README|Documentation Templates]].
 
 ## Tujuan
 
 Single source of truth untuk **alokasi identifier namespace `TPL`** pada master template: mencatat status alokasi, waktu, dan referensi otorisasi yang benar-benar terjadi.
 
-Katalog rancangan 29 template berada di [[README|05-Templates README]]. **Katalog ≠ registry**: README menyimpan rencana, registry hanya menyimpan riwayat alokasi yang benar-benar terjadi.
+Katalog rancangan 29 template berada di [[05-Templates/README|Documentation Templates]]. **Katalog ≠ registry**: README menyimpan rencana; registry hanya riwayat alokasi yang benar-benar terjadi.
+
+Registry ini **hanya** mengelola namespace `TPL`. Project (`PRJ`), Agent (`AGT`), Delegation (`DEL`), Approval (`APR`), Revision Proposal (`REV`), dan identifier lain mengikuti [[03-Hermes/Governance/Naming-Conventions|Naming Conventions]] serta registry atau allocation record yang relevan — **belum tersedia** untuk semua namespace. Jangan menggunakan registry ini sebagai registry seluruh organizational identifiers.
 
 ## Ruang lingkup
 
@@ -41,15 +43,15 @@ Registry **tidak**:
 |-------|------------|
 | `template_id` | Identifier master template (`TPL-NNN`, GOV-008). |
 | `title` | Judul master template. |
-| `category` | `Project-Management`, `Agent-Management`, `Software-Development`, `Knowledge-Management`. |
+| `category` | `project-management`, `agent-management`, `software-development`, `knowledge-management` — selaras dengan nilai `category` pada frontmatter master (GOV-008). Folder vault tetap `Project-Management/`, dll. |
 | `path` | Path relatif master di vault. |
 | `allocation_status` | Identifier lifecycle: `reserved`, `allocated`, `retired` (lihat bawah). |
-| `reserved_at` | Tanggal `reserved` dicatat (`YYYY-MM-DD`, Asia/Jakarta); `null` bila belum. |
-| `allocated_at` | Tanggal `allocated` tercatat; `null` bila belum. |
-| `retired_at` | Tanggal `retired` tercatat; `null` bila belum. |
-| `authorization_reference` | Referensi otorisasi alokasi (`APR-NNNNNN` bila dialokasikan); `null` bila belum ada. |
+| `reserved_at` | Timestamp kejadian `reserved` — ISO 8601 dengan timezone (Asia/Jakarta); `null` bila belum terjadi. |
+| `allocated_at` | Timestamp kejadian `allocated` — ISO 8601 dengan timezone; `null` bila belum terjadi. |
+| `retired_at` | Timestamp kejadian `retired` — ISO 8601 dengan timezone; `null` bila belum terjadi. |
+| `authorization_reference` | Referensi otorisasi reservation/allocation; wajib untuk setiap reservation atau allocation aktual; `null` bila belum ada. |
 
-Field waktu dan referensi mengikuti GOV-008: `null` untuk nilai tunggal yang belum tersedia, system clock aktual untuk tanggal yang terjadi.
+Field waktu mengikuti [[03-Hermes/Governance/Naming-Conventions|Naming Conventions]]: kejadian alokasi memakai ISO 8601 + timezone dari system clock aktual; `created_at`/`updated_at` dokumen foundation memakai `YYYY-MM-DD`. Field kejadian yang belum terjadi tetap `null`.
 
 ## Identifier lifecycle
 
@@ -75,9 +77,18 @@ Terpisah dari document lifecycle, project lifecycle, dan agent lifecycle (GOV-00
 7. Jika terjadi **push failure**: pertahankan local changes atau commit yang belum terpublikasi; **jangan discard** perubahan, **jangan force push**. Selesaikan konflik sebelum melanjutkan.
 8. Dokumen foundation ini **tidak** menerima ID `TPL`.
 
+### Bootstrap authorization
+
+- `authorization_reference` **wajib** untuk setiap reservation atau allocation aktual.
+- Pada fase bootstrap, `authorization_reference` dapat merujuk **bukti persetujuan eksplisit Owner yang dapat ditelusuri**, walaupun Approval Registry atau `APR-NNNNNN` belum tersedia.
+- Gunakan referensi bukti yang **benar-benar tersedia** dan dapat diperiksa kembali.
+- **Jangan** membuat Approval ID, conversation ID, evidence reference, atau timestamp fiktif.
+- Jika bukti otorisasi tidak tersedia atau tidak dapat ditelusuri, **hentikan** alokasi.
+- Ketentuan ini **tidak** memberikan otorisasi alokasi ID dalam tugas finalisasi foundation; tugas alokasi memerlukan otorisasi terpisah.
+
 ## Riwayat alokasi
 
-**Belum ada entri alokasi.** Tabel berikut sengaja dikosongkan — tidak ada ID yang reserved, allocated, atau retired pada Phase 0.
+**Belum ada entri alokasi.** Tabel berikut sengaja dikosongkan — tidak ada ID yang reserved, allocated, atau retired.
 
 | template_id | title | category | path | allocation_status | reserved_at | allocated_at | retired_at | authorization_reference |
 |-------------|-------|----------|------|-------------------|-------------|--------------|------------|-------------------------|
@@ -88,7 +99,7 @@ Entri akan ditambahkan hanya setelah alokasi aktual melalui workflow di atas dan
 
 | Komponen | Status |
 |----------|--------|
-| Registry initialization (tanpa entri ID) | Dilakukan pada Phase 0. |
+| Registry initialization (tanpa entri ID) | **Operational** untuk struktur field dan aturan; belum ada entri alokasi. |
 | Alokasi `TPL-*` aktual | **Belum ada.** |
 | Automatic allocation | **Planned** — belum terverifikasi (GOV-002, GOV-008). |
 | Collision prevention otomatis | **Planned** — belum terverifikasi (GOV-008). |
@@ -96,8 +107,8 @@ Entri akan ditambahkan hanya setelah alokasi aktual melalui workflow di atas dan
 
 ## Dokumen terkait
 
-- [[README|05-Templates README]] — katalog rancangan 29 template
-- [[Template-Standard]] — standar metadata, struktur, dan penggunaan master
-- [[Naming-Conventions]] (GOV-008) — identifier lifecycle dan alokasi terpusat
-- [[Document-Lifecycle]] (GOV-004) — status dan version master
-- [[Knowledge-Management-Policy]] (GOV-003) — sinkronisasi dan publikasi
+- [[05-Templates/README|Documentation Templates]] — katalog rancangan 29 template
+- [[05-Templates/Template-Standard|Template Standard]] — standar metadata, struktur, dan penggunaan master
+- [[03-Hermes/Governance/Naming-Conventions|Naming Conventions]] (GOV-008)
+- [[03-Hermes/Governance/Document-Lifecycle|Document Lifecycle]] (GOV-004)
+- [[03-Hermes/Governance/Knowledge-Management-Policy|Knowledge Management Policy]] (GOV-003)

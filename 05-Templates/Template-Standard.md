@@ -1,13 +1,13 @@
 ---
 title: Template Standard
 category: templates
-version: 0.1.0
-status: draft
+version: 1.0.0
+status: approved
 owner: owner
 author: hermes-default
-reviewer: null
-approved_by: null
-approved_at: null
+reviewer: owner
+approved_by: owner
+approved_at: 2026-11-25T16:22:31+07:00
 created_at: 2026-11-25
 updated_at: 2026-11-25
 tags: ['ai-office', 'templates', 'standard']
@@ -15,13 +15,11 @@ tags: ['ai-office', 'templates', 'standard']
 
 # Template Standard
 
-> **Catatan frontmatter:** dokumen ini adalah supporting operational standard, bukan master template, sehingga **tidak** menerima `template_id` maupun `document_id` (lihat [[README|05-Templates README]]).
+> **Identitas artefak:** supporting operational standard; identitas otoritatif = path `05-Templates/Template-Standard.md`. **Tidak** memiliki `template_id` maupun `document_id`. Lihat [[05-Templates/README|Documentation Templates]].
 
 ## Tujuan
 
 Panduan turunan untuk membuat dan menggunakan master template di `05-Templates/`. Dokumen ini **bukan governance policy baru**; seluruh aturannya menurunkan dan mengacu ke GOV-001 sampai GOV-008 yang berstatus approved. Bila terjadi konflik, governance yang berlaku.
-
-**Status: draft sampai review Owner.**
 
 ## Master Template Metadata
 
@@ -33,7 +31,7 @@ Setiap master template memiliki **satu YAML frontmatter aktual** dengan field be
 | `document_id` | Nilai TPL — **sama** dengan `template_id`. |
 | `template_id` | Nilai TPL — **sama** dengan `document_id`. |
 | `document_type` | Selalu `template`. |
-| `category` | Salah satu dari empat kategori folder. |
+| `category` | `project-management`, `agent-management`, `software-development`, atau `knowledge-management` — selaras dengan [[05-Templates/Template-Registry|Template Registry]]. Folder vault tetap `Project-Management/`, dll. |
 | `version` | Semver (GOV-004). |
 | `status` | Document lifecycle (GOV-004). |
 | `owner` | Document owner. |
@@ -49,47 +47,43 @@ Aturan:
 
 - **`document_id` dan `template_id` memakai nilai TPL yang sama** — tidak ada dua ID berbeda untuk satu master.
 - **Master baru:** `version: 0.1.0`, `status: draft`, `reviewer: null` bila belum ditetapkan, `approved_by: null`, `approved_at: null`, `created_at` dan `updated_at` dari system clock aktual.
-- **Tidak mengalokasikan ID aktual dalam Phase 0** — alokasi mengikuti [[Template-Registry]] dan GOV-008.
+- Alokasi `TPL-*` mengikuti [[05-Templates/Template-Registry|Template Registry]] dan GOV-008 — hanya melalui workflow terotorisasi.
 
 ## Generated Document Metadata
 
 Contoh metadata instance diletakkan sebagai **fenced YAML di dalam body template**, bukan frontmatter kedua:
 
 ```yaml
-# Contoh pola — bukan alokasi aktual
-document_id: TPL-INSTANCE-ID
-document_type: <jenis-dokumen>
-title: <Judul Dokumen>
-category: <project|agent|software|knowledge>
-version: 0.1.0
+title: null
+document_id: null
+document_type: null
+category: null
+version: "0.1.0"
 status: draft
-owner: <document-owner>
-author: hermes-default
+owner: null
+author: null
 reviewer: null
 approved_by: null
 approved_at: null
-created_at: YYYY-MM-DD
-updated_at: YYYY-MM-DD
+created_at: null
+updated_at: null
 tags: []
-# --- field entity bila relevan (GOV-007, GOV-008) ---
-project_id: null            # pola PRJ-NNN; null sampai dialokasikan
-project_status: null        # lifecycle proyek — BUKAN status dokumen
-delegation_status: null     # bila dokumen adalah Delegation-Record
-decision: null              # bila dokumen adalah Approval-Record
-activation_status: null     # bila dokumen adalah Agent-Profile
-allocation_status: null     # identifier lifecycle — lihat Template-Registry
-# --- provenance ---
-source_template_id: <template-id>
-source_template_version: 0.1.0
+source_template_id: null
+source_template_version: null
 ```
+
+Blueprint di atas merupakan **contoh pola** di body master — **bukan** metadata dokumen yang siap dipublikasikan.
+
+- Namespace `TPL` **hanya** untuk master template, bukan untuk instance.
+- Instance memperoleh `document_id` dan identifier lain sesuai GOV-008 dan jenis entitas (`PRJ-NNN-DOC-NNN`, `KNW-NNN`, `proposal_id`, dll.).
+- Pertahankan context-specific metadata bila relevan; entity records dan native system resources mengikuti schema masing-masing.
 
 Aturan instance:
 
 - Metadata instance mengikuti GOV-004, GOV-007, GOV-008 dan jenis dokumennya.
-- `source_template_id` dan `source_template_version` mereferensikan master yang digunakan (provenance).
-- Instance **tidak mewarisi** `document_id`, status approval, metadata approval, `author`, atau timestamp master.
-- Instance memperoleh identitas dan metadata aktual melalui workflow yang terotorisasi.
-- Gunakan `null` untuk nilai tunggal yang belum tersedia dan `[]` untuk koleksi kosong (GOV-008).
+- Saat instance **dibuat**, isi: `author` = pembuat aktual; `source_template_id` = ID master aktual; `source_template_version` = versi master yang benar-benar digunakan; `created_at`/`updated_at` = system clock aktual.
+- Instance **tidak mewarisi** approval, author, identifier, atau timestamp master.
+- Gunakan `null` dan `[]` sesuai tipe field (GOV-008).
 
 ## Universal Template Structure
 
@@ -97,7 +91,7 @@ Setiap master template memiliki:
 
 1. **Template Metadata** — frontmatter master.
 2. **Purpose** — tujuan dan ruang lingkup template.
-3. **Usage Instructions** — cara mengisi dan di mana menyimpan instance.
+3. **Usage Instructions** — cara **generate** instance dari master (bukan salin seluruh master) dan di mana menyimpan instance.
 4. **Target SSOT** — lokasi otoritatif instance yang dihasilkan.
 5. **Generated Metadata** — contoh fenced YAML metadata instance.
 6. **Required Sections** — bagian wajib instance.
@@ -125,17 +119,26 @@ Jangan mencampur dimensi status berikut:
 
 ## Usage Rules
 
-- Jangan mengedit master saat mengisi instance.
-- Gunakan master `approved` untuk penggunaan resmi.
-- Master `draft` dapat digunakan untuk review atau simulasi terotorisasi.
+### Generate from template
+
+1. Baca master `approved`.
+2. Ekstrak generated metadata blueprint dan section yang berlaku.
+3. Isi metadata/konten instance dari fakta aktual.
+4. Validasi, lalu simpan pada Target SSOT.
+
+**Jangan** membawa master frontmatter, master approval, Usage Instructions, atau Validation Checklist ke instance. **Jangan** mengubah master saat generate instance.
+
+### Aturan umum
+
+- Gunakan master `approved` untuk penggunaan resmi; master `draft` hanya untuk review/simulasi terotorisasi.
 - Approval master **tidak diwariskan** kepada instance.
-- Pengisian template **tidak** memberikan approval, assignment, delegasi, atau permission.
-- Project, agent, approval, dan delegation IDs hanya dialokasikan melalui workflow terotorisasi (GOV-008, [[Template-Registry]]).
+- Generate **tidak** memberikan approval, assignment, delegasi, atau permission.
+- `TPL-*` hanya melalui [[05-Templates/Template-Registry|Template Registry]]; `PRJ`, `AGT`, `DEL`, `APR`, `REV`, dan lainnya sesuai GOV-008 — registry namespace lain **belum tersedia** untuk semua jenis.
 - Jangan menyimpan raw secrets.
-- SSOT instance mengikuti [[Information-Architecture]] (GOV-002).
-- Metadata waktu mengikuti [[Naming-Conventions]] (GOV-008) dan system clock aktual.
-- Revisi master approved mengikuti [[Document-Lifecycle]] (GOV-004) dan GOV-008 — siapkan proposal terpisah, jangan menurunkan status master resmi ke draft.
-- Validation checklist dilakukan **manual** sampai automated validation terverifikasi.
+- SSOT instance mengikuti [[03-Hermes/Governance/Information-Architecture|Information Architecture]] (GOV-002).
+- Metadata waktu mengikuti [[03-Hermes/Governance/Naming-Conventions|Naming Conventions]] dan system clock aktual.
+- Revisi master approved mengikuti GOV-004/GOV-008 — proposal terpisah.
+- Validation checklist **manual** sampai automated validation terverifikasi.
 
 ## Foundation Document Metadata
 
@@ -146,8 +149,8 @@ Jangan mencampur dimensi status berikut:
 | `05-Templates/Template-Standard.md` | Supporting operational standard — bukan master template. | Tidak diberikan |
 
 - Jangan memberikan ID `TPL` kepada ketiga file foundation.
-- Bila suatu field identitas belum memiliki namespace yang sesuai, **jangan** menciptakan ID fiktif atau namespace baru; laporkan kebutuhan metadata tambahan kepada Owner.
-- `document_id` ketiga file foundation sengaja dikosongkan karena tidak ada namespace yang sesuai — bukan kelalaian.
+- Ketiga foundation menggunakan **path vault** sebagai identitas; tidak memiliki `document_id` atau `template_id`.
+- Jangan menciptakan namespace identifier baru untuk foundation.
 
 ## Validation Checklist
 
@@ -161,23 +164,24 @@ Manual, per master template, sebelum publikasi:
 - [ ] Field entity (`project_status`, `delegation_status`, `decision`, `activation_status`, `allocation_status`) tidak tertukar dengan `status`.
 - [ ] Sembilan bagian struktur universal tersedia atau disesuaikan secara eksplisit.
 - [ ] Target SSOT instance konsisten dengan GOV-002.
-- [ ] Tidak ada ID aktual dialokasikan lewat pengisian template.
+- [ ] Tidak ada ID aktual dialokasikan lewat generate instance.
 - [ ] Tidak ada kredensial atau raw secret.
 - [ ] Wikilink hanya menunjuk berkas yang benar-benar ada.
-- [ ] Master tercatat pada [[Template-Registry]] setelah alokasi dan verifikasi.
+- [ ] Master tercatat pada [[05-Templates/Template-Registry|Template Registry]] setelah alokasi dan verifikasi.
+- [ ] Blueprint instance tidak memakai namespace `TPL` untuk `document_id`.
 
 ## Governance References
 
-- [[AI-Office-Charter]] (GOV-001)
-- [[Information-Architecture]] (GOV-002)
-- [[Knowledge-Management-Policy]] (GOV-003)
-- [[Document-Lifecycle]] (GOV-004)
-- [[Approval-Policy]] (GOV-005)
-- [[Agent-Access-Policy]] (GOV-006)
-- [[Project-Registration-Standard]] (GOV-007)
-- [[Naming-Conventions]] (GOV-008)
+- [[03-Hermes/Governance/AI-Office-Charter|AI Office Charter]] (GOV-001)
+- [[03-Hermes/Governance/Information-Architecture|Information Architecture]] (GOV-002)
+- [[03-Hermes/Governance/Knowledge-Management-Policy|Knowledge Management Policy]] (GOV-003)
+- [[03-Hermes/Governance/Document-Lifecycle|Document Lifecycle]] (GOV-004)
+- [[03-Hermes/Governance/Approval-Policy|Approval Policy]] (GOV-005)
+- [[03-Hermes/Governance/Agent-Access-Policy|Agent Access Policy]] (GOV-006)
+- [[03-Hermes/Governance/Project-Registration-Standard|Project Registration Standard]] (GOV-007)
+- [[03-Hermes/Governance/Naming-Conventions|Naming Conventions]] (GOV-008)
 
 ## Dokumen terkait
 
-- [[README|05-Templates README]] — katalog rancangan 29 template
-- [[Template-Registry]] — SSOT alokasi namespace `TPL`
+- [[05-Templates/README|Documentation Templates]] — katalog 29 master template
+- [[05-Templates/Template-Registry|Template Registry]] — SSOT namespace `TPL` saja
