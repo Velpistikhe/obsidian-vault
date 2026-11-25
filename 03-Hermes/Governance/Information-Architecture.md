@@ -2,16 +2,16 @@
 title: Information Architecture
 document_id: GOV-002
 category: governance
-version: 0.2.0
-status: draft
+version: 1.0.0
+status: approved
 owner: owner
 author: hermes-default
-reviewer: null
-approved_by: null
-approved_at: null
+reviewer: owner
+approved_by: owner
+approved_at: 2026-11-25T07:31:01+07:00
 created_at: 2026-11-24
 updated_at: 2026-11-25
-tags: ['ai-office', 'governance', 'draft', 'architecture']
+tags: ['ai-office', 'governance', 'architecture']
 ---
 
 # Information Architecture
@@ -40,8 +40,10 @@ Pemetaan **single source of truth (SSOT)** untuk AI Office. Setiap sistem memili
 | Komponen | Kondisi dan bukti |
 |----------|--------------------|
 | Obsidian Desktop automatic commit, push, dan pull | Dilaporkan sebagai operational dan diuji pada environment AI Office. |
-| Hermes `knowledge-sync` skill | Operational: prosedur mewajibkan pre-task pull dan publish pascatugas yang diotorisasi. |
-| Native Obsidian skill | Available untuk operasi baca/tulis note pada vault. |
+| Knowledge Sync Skill | Operational: prosedur mewajibkan pre-task pull dan publish pascatugas yang diotorisasi. |
+| Native Obsidian Skill | Operational untuk operasi baca/tulis note pada vault. |
+| Hermes Default Profile | Operational sebagai profile Hermes default yang menjalankan workflow setup. |
+| Admin Agent Activation | Planned; memerlukan keputusan eksplisit Owner tentang aktivasi, tanggung jawab, dan batas kewenangan. |
 | `vault-sync.sh` | Operational: pre-task pull telah berhasil; publish pascatugas menggunakan daftar file eksplisit. |
 | Obsidian Vault ↔ GitHub Knowledge Repository | Bidirectional synchronization operational; pull terbaru berhasil dan publikasi terdahulu terverifikasi. |
 
@@ -63,14 +65,20 @@ Status menggambarkan bukti yang tersedia, bukan target arsitektur. **Operational
 |--------------------|--------|---------|
 | Shared Obsidian vault dan repository knowledge | Operational | Pull/publish melalui `vault-sync.sh` telah digunakan; sinkronisasi GitHub Knowledge Repository aktif. |
 | Obsidian Desktop automatic commit, push, dan pull | Operational | Dilaporkan telah diuji pada environment AI Office. |
-| Hermes knowledge-sync dan native Obsidian skills | Available | Prosedur dan kemampuan operasi tersedia; sinkronisasi dilakukan sesuai workflow. |
+| Knowledge Sync Skill | Operational | Pre-task pull dan authorized post-task publish melalui workflow knowledge-sync. |
+| Native Obsidian Skill | Operational | Kemampuan operasi baca/tulis note tersedia dan digunakan. |
+| Hermes Default Profile | Operational | Profile default aktif menjalankan workflow setup. |
+| Admin Agent Activation | Planned | Aktivasi memerlukan keputusan eksplisit Owner. |
 | Hermes Workspace | Available | Lokasi kerja yang ditetapkan; integrasi otomatis lintas sistem tidak diasumsikan. |
 | GitHub Project Repository | Available | SSOT yang ditetapkan untuk kode dan dokumentasi engineering proyek. |
-| Kanban integration | Pending Verification | Status integrasi aktual belum diverifikasi. |
+| Hermes Kanban Integration | Pending Verification | Status integrasi aktual belum diverifikasi. |
 | Individual agent memory isolation | Pending Verification | Isolasi dan konfigurasi aktual belum diverifikasi. |
-| Specialist Agent Profiles | Pending Verification | Tidak diasumsikan tersedia atau telah diuji. |
+| Specialist Agent Profiles | Planned | Belum dibentuk; memerlukan perencanaan dan otorisasi terpisah. |
 | Cross-system Project Repository ↔ Knowledge Base sync | Planned | Dapat dipertimbangkan bila dibutuhkan. |
-| Automatic schema validation, secret scanning, multi-agent write coordination, runtime access enforcement | Planned | Belum dinyatakan operasional. |
+| Metadata Schema Validation | Planned | Validasi otomatis belum dinyatakan operasional. |
+| Automatic Secret Scanning | Planned | Scanning otomatis belum dinyatakan operasional. |
+| Multi-Agent Coordination | Planned | Write coordination multi-agent belum dinyatakan operasional. |
+| Runtime Access Enforcement | Planned | Enforcement akses runtime belum dinyatakan operasional. |
 
 ## Information Flow
 
