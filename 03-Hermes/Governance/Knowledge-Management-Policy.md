@@ -35,12 +35,12 @@ Klasifikasi berikut mengelompokkan informasi berdasarkan fungsi, bukan tingkat k
 | Kategori | Cakupan | Lokasi SSOT |
 |---|---|---|
 | Organizational Knowledge | Governance, keputusan organisasi, workflows dan registry bersama | Obsidian Vault; version control di GitHub Knowledge Repository |
-| Project Knowledge | Charter, status, keputusan bisnis dan ringkasan proyek | Obsidian Vault untuk dokumentasi organisasi; detail engineering/code di GitHub Project Repository |
+| Project Knowledge | Project charter, project scope, business requirements, business decisions, project status reports, dan historical milestone reports | Obsidian Vault: project charter, project scope, business requirements, business decisions, project status reports, dan historical milestone reports. GitHub Project Repository tetap SSOT untuk dokumentasi engineering dan source code sesuai GOV-002. Obsidian dapat menyimpan laporan perkembangan sebagai snapshot bertanggal dengan sumber yang jelas; bukan sumber otoritatif live task status. |
 | Reusable Technical Knowledge | Solusi teknis terverifikasi yang berguna lintas tugas/proyek | Obsidian Vault, termasuk `01-Knowledge-Base`; kode tetap di repositori proyek yang relevan |
 | Research Knowledge | Temuan, sintesis, dan referensi riset | Obsidian Vault, termasuk `04-Research`, dengan sumber/provenance |
 | Individual Knowledge | Konteks dan pengalaman milik satu agent | Agent Memory individual; bukan shared knowledge atau audit resmi |
 | Temporary Working Information | Draft sementara, working files, generated artifacts | Hermes Workspace; bukan SSOT jangka panjang tanpa publish |
-| Operational Task Information | Assignment, status, prioritas, dependency, blockers | Hermes Kanban jika integrasi tersedia; status integrasi tetap Pending Verification menurut GOV-002 |
+| Operational Task Information | Task assignment, current task status, task progress, priority, dependencies, blockers | Target SSOT: Hermes Kanban. Integrasi Kanban tetap Pending Verification menurut GOV-002; jangan anggap integrasi telah diverifikasi. |
 
 Klasifikasi ini tidak menetapkan klasifikasi kerahasiaan enterprise atau masa retensi. Keduanya **TBD** dan memerlukan keputusan Owner.
 
@@ -60,6 +60,8 @@ Untuk pekerjaan substantif AI Office:
 4. Periksa sumber otoritatif sesuai GOV-002, termasuk versi dan statusnya.
 5. Hindari duplikasi serta penggunaan dokumentasi yang diketahui usang atau telah digantikan.
 6. Gunakan knowledge-sync dan native Obsidian skill sesuai instruksi operasional.
+
+Apabila pre-task synchronization gagal, hentikan pekerjaan yang bergantung pada Shared Knowledge Base dan laporkan kendalanya. Pekerjaan yang tidak bergantung pada vault hanya dapat dilanjutkan apabila aman, tidak melanggar instruksi operasional, dan tetap berada dalam scope yang diotorisasi. Jangan menggunakan knowledge yang mungkin sudah usang sebagai dasar keputusan tanpa menjelaskan keterbatasannya.
 
 Sinkronisasi dan retrieval ini tidak diwajibkan untuk percakapan umum yang tidak terkait pekerjaan AI Office.
 
@@ -118,7 +120,7 @@ Untuk konflik Git/sinkronisasi: hentikan operasi sinkronisasi yang gagal; jangan
 
 ## Security and Implementation Limitations
 
-Jangan menyimpan password, API key, token, private key, kredensial lain, atau raw execution logs di vault. Gunakan ringkasan yang aman sesuai kebutuhan dan [[03-Hermes/Execution-Logs]].
+Jangan menyimpan password, API key, token, private key, kredensial lain, atau raw execution logs di vault. Otorisasi atas informasi yang sensitivitasnya belum jelas tidak menghapus larangan penyimpanan kredensial. Jika agent tidak dapat memastikan suatu informasi aman untuk Shared Knowledge Base, jangan publikasikan sampai memperoleh klarifikasi atau otorisasi dari pihak berwenang. Klasifikasi kerahasiaan enterprise dan kebijakan retensi tetap **TBD**. Gunakan ringkasan yang aman sesuai kebutuhan dan [[03-Hermes/Execution-Logs]].
 
 Bedakan:
 

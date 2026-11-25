@@ -24,19 +24,32 @@ Siklus hidup dokumen kebijakan dan pengetahuan di vault. Status mencerminkan kon
 
 ```text
 draft → in_review → pending_approval → approved → archived
-          ↑  ↓             ↓
-          └── draft ←───────┘
+  ↑        │                │
+  └────────┘                └──→ draft (revisi/penolakan)
 ```
 
 | Status | Makna dan kondisi |
 |---|---|
 | `draft` | Konten awal atau revisi yang sedang disiapkan. Boleh dipublikasikan untuk review bila diotorisasi; belum disetujui. |
 | `in_review` | Reviewer ditugaskan dan memeriksa konten. Reviewer dapat meminta perubahan; dokumen kembali ke `draft`. |
-| `pending_approval` | Review selesai dan dokumen diajukan kepada Owner atau delegasi yang secara eksplisit disetujui. Jika approval belum diberikan atau revisi diminta, status kembali ke `draft`. |
+| `pending_approval` | Menunggu keputusan approver. Jika approver belum merespons, status tetap `pending_approval`. Persetujuan sah memindahkan status ke `approved`; permintaan revisi atau penolakan mengembalikan proposal ke `draft`. Penolakan harus disertai alasan tercatat. Proposal yang ditolak tidak boleh diajukan ulang sebelum alasan ditindaklanjuti atau arahan pihak berwenang diperoleh. |
 | `approved` | Versi yang disetujui oleh pihak berwenang; metadata approval mencatat otoritas dan waktu aktual. Tidak boleh ditetapkan tanpa approval sah. |
 | `archived` | Dokumen tidak aktif dan dipertahankan untuk referensi historis; pengarsipan memerlukan otorisasi dan mengikuti aturan arsip di bawah. |
 
-Transisi normal: `draft` → `in_review` → `pending_approval` → `approved`. Reviewer mengembalikan ke `draft` untuk revisi. Approver yang belum memberi approval atau menolak proposal mengembalikannya ke `draft`; versi approved sebelumnya tetap berlaku. Perpindahan ke `archived` dilakukan atas otorisasi yang sesuai. Status `approved` tidak boleh disimpulkan dari commit/push.
+Transisi normal: `draft` → `in_review` → `pending_approval` → `approved`. Reviewer dapat mengembalikan `in_review` ke `draft` untuk revisi. Di `pending_approval`, proposal tetap di status tersebut selama menunggu keputusan atau respons approver. Approver yang meminta revisi atau menolak mengembalikannya ke `draft`; alasan penolakan dicatat dan ditindaklanjuti sebelum pengajuan ulang. Hanya persetujuan sah yang memindahkannya ke `approved`. Versi approved sebelumnya tetap berlaku selama proposal diproses atau ditolak. Perpindahan ke `archived` dilakukan atas otorisasi yang sesuai. Status `approved` tidak boleh disimpulkan dari commit/push.
+
+### Otoritas perpindahan status
+
+| Transition | Authority |
+|---|---|
+| `draft` → `in_review` | Authorized Author atau Document Owner |
+| `in_review` → `draft` | Authorized Reviewer |
+| `in_review` → `pending_approval` | Authorized Reviewer |
+| `pending_approval` → `draft` | Approver yang meminta revisi atau menolak |
+| `pending_approval` → `approved` | Authorized Approver |
+| `approved` → `archived` | Pihak yang memiliki otorisasi pengarsipan |
+
+Perubahan metadata status dapat dijalankan oleh authorized publisher berdasarkan keputusan pihak berwenang. Publisher tidak memperoleh kewenangan approval hanya karena memiliki akses tulis. Detail authorization matrix mengikuti [[Approval-Policy]] dan [[Agent-Access-Policy]].
 
 Untuk dokumen rutin, lifecycle sederhana dapat digunakan hanya bila jenis dokumen dan delegasinya secara eksplisit disetujui. Tidak ada delegasi yang diasumsikan aktif; detail otoritas mengikuti [[Approval-Policy]].
 
@@ -58,7 +71,19 @@ Contoh tersebut adalah pedoman versi, bukan hak approval. Kenaikan versi tidak m
 
 Versi approved terakhir tetap menjadi versi resmi selama revisi berlangsung dan jika revisi ditolak. Jangan mengubah file resmi dari `approved` menjadi `draft` untuk memulai revisi.
 
-Buat usulan perubahan sebagai draft terpisah di workspace, atau sebagai file proposal terpisah di vault jika publikasi review diotorisasi. Proposal mencantumkan `document_id`, `base version`, dan `target version`. Setelah memperoleh approval sah, versi resmi diperbarui melalui publikasi terotorisasi dan mencatat approval. Jika ditolak, proposal tidak menggantikan versi resmi sebelumnya.
+Buat usulan perubahan sebagai draft terpisah di workspace, atau sebagai file proposal terpisah di vault jika publikasi review diotorisasi. Proposal harus memiliki nama file atau identitas terpisah agar tidak menjadi dokumen resmi kedua yang ambigu. Metadata konseptual:
+
+```yaml
+document_id: GOV-001
+document_type: revision_proposal
+base_version: 1.0.0
+target_version: 1.1.0
+status: draft
+approved_by: null
+approved_at: null
+```
+
+`document_id` merujuk dokumen utama yang diusulkan untuk direvisi; proposal bukan sumber kebijakan otoritatif. Versi approved sebelumnya tetap berlaku sampai versi pengganti memperoleh persetujuan sah dan diberlakukan melalui publikasi terotorisasi. Jika proposal ditolak, proposal tidak menggantikan versi resmi sebelumnya. Standar final penamaan dan identitas proposal akan ditetapkan di GOV-008; jangan menetapkan skema ID proposal permanen sebelum GOV-008 direview.
 
 ## Document Ownership dan peran
 
