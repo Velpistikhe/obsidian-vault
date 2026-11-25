@@ -112,6 +112,16 @@ Pada 2026-11-25, `authorization_reference` ke-9 entri diperkaya dengan rujukan k
 | TPL-008 | Business Process | project-management | 05-Templates/Project-Management/Business-Process.md | allocated | 2026-11-25T16:27:54+07:00 | 2026-11-25T16:34:01+07:00 | null | [original @ allocation] Owner approval "AI Office — Documentation Templates Phase 1"; baseline edf37a9dcb29bdd464c92e1a11d5e442a8bb11d1; [retrospective confirmation @ 2026-11-25T17:51:52+07:00] 03-Hermes/Governance/Authorization-Evidence/Template-Phase-1-Authorization-Confirmation.md (recorded_at 2026-11-25T17:51:52+07:00; historical evidence limitation tetap berlaku) |
 | TPL-009 | UAT Criteria | project-management | 05-Templates/Project-Management/UAT-Criteria.md | allocated | 2026-11-25T16:27:54+07:00 | 2026-11-25T16:34:01+07:00 | null | [original @ allocation] Owner approval "AI Office — Documentation Templates Phase 1"; baseline edf37a9dcb29bdd464c92e1a11d5e442a8bb11d1; [retrospective confirmation @ 2026-11-25T17:51:52+07:00] 03-Hermes/Governance/Authorization-Evidence/Template-Phase-1-Authorization-Confirmation.md (recorded_at 2026-11-25T17:51:52+07:00; historical evidence limitation tetap berlaku) |
 
+### Knowledge Management (Phase 2)
+
+Reservation dilakukan manual dan serial oleh pihak berwenang pada 2026-11-25, setelah sinkronisasi dan pemeriksaan namespace `TPL` (terisi `TPL-001`–`TPL-009` pada saat itu; `TPL-010` tidak ditemukan di repository, registry, maupun riwayat Git).
+
+`authorization_reference` merujuk bukti otorisasi Owner Phase 2 yang telah dipublikasikan: `03-Hermes/Governance/Authorization-Evidence/Template-Phase-2-Authorization.md` (recorded_at 2026-11-25T21:40:15+07:00; baseline `9510257493e78f0e107449e6d069f4b2e5f2358a`). Approval Registry dan `APR-NNNNNN` belum tersedia pada fase bootstrap, sehingga tidak ada approval ID yang dibuat.
+
+| template_id | title | category | path | allocation_status | reserved_at | allocated_at | retired_at | authorization_reference |
+|-------------|-------|----------|------|-------------------|-------------|--------------|------------|-------------------------|
+| TPL-010 | Revision Proposal | knowledge-management | 05-Templates/Knowledge-Management/Revision-Proposal.md | reserved | 2026-11-25T21:41:07+07:00 | null | null | 03-Hermes/Governance/Authorization-Evidence/Template-Phase-2-Authorization.md (recorded_at 2026-11-25T21:40:15+07:00; baseline 9510257493e78f0e107449e6d069f4b2e5f2358a) |
+
 ### Namespace lain
 
 Namespace `PRJ`, `AGT`, `DEL`, `APR`, `REV`, dan lainnya **belum** punya entri di registry ini; registry ini hanya mengelola namespace `TPL`.
