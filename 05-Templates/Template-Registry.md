@@ -96,17 +96,19 @@ Reservation dilakukan manual dan serial oleh pihak berwenang pada 2026-11-25, se
 
 `authorization_reference` merujuk bukti otorisasi Owner yang dapat ditelusuri: **Approval Owner atas "AI Office — Documentation Templates Phase 1"**, dan baseline review `edf37a9dcb29bdd464c92e1a11d5e442a8bb11d1` (approved Template Foundation v1.0.0). Approval Registry dan `APR-NNNNNN` belum tersedia pada fase bootstrap, sehingga tidak ada approval ID yang dibuat.
 
+Status `allocated` ditetapkan setelah sembilan master template lolos validasi dan berhasil dipublikasikan bersama registry ini; `reserved_at` (reservation) dan `authorization_reference` dipertahankan.
+
 | template_id | title | category | path | allocation_status | reserved_at | allocated_at | retired_at | authorization_reference |
 |-------------|-------|----------|------|-------------------|-------------|--------------|------------|-------------------------|
-| TPL-001 | Project Profile | project-management | 05-Templates/Project-Management/Project-Profile.md | reserved | 2026-11-25T16:27:54+07:00 | null | null | Owner approval "AI Office — Documentation Templates Phase 1"; baseline edf37a9dcb29bdd464c92e1a11d5e442a8bb11d1 |
-| TPL-002 | Project Charter | project-management | 05-Templates/Project-Management/Project-Charter.md | reserved | 2026-11-25T16:27:54+07:00 | null | null | Owner approval "AI Office — Documentation Templates Phase 1"; baseline edf37a9dcb29bdd464c92e1a11d5e442a8bb11d1 |
-| TPL-003 | Project Scope | project-management | 05-Templates/Project-Management/Project-Scope.md | reserved | 2026-11-25T16:27:54+07:00 | null | null | Owner approval "AI Office — Documentation Templates Phase 1"; baseline edf37a9dcb29bdd464c92e1a11d5e442a8bb11d1 |
-| TPL-004 | Project Plan | project-management | 05-Templates/Project-Management/Project-Plan.md | reserved | 2026-11-25T16:27:54+07:00 | null | null | Owner approval "AI Office — Documentation Templates Phase 1"; baseline edf37a9dcb29bdd464c92e1a11d5e442a8bb11d1 |
-| TPL-005 | Business Requirements | project-management | 05-Templates/Project-Management/Business-Requirements.md | reserved | 2026-11-25T16:27:54+07:00 | null | null | Owner approval "AI Office — Documentation Templates Phase 1"; baseline edf37a9dcb29bdd464c92e1a11d5e442a8bb11d1 |
-| TPL-006 | Project Status Report | project-management | 05-Templates/Project-Management/Project-Status-Report.md | reserved | 2026-11-25T16:27:54+07:00 | null | null | Owner approval "AI Office — Documentation Templates Phase 1"; baseline edf37a9dcb29bdd464c92e1a11d5e442a8bb11d1 |
-| TPL-007 | Project Closure Report | project-management | 05-Templates/Project-Management/Project-Closure-Report.md | reserved | 2026-11-25T16:27:54+07:00 | null | null | Owner approval "AI Office — Documentation Templates Phase 1"; baseline edf37a9dcb29bdd464c92e1a11d5e442a8bb11d1 |
-| TPL-008 | Business Process | project-management | 05-Templates/Project-Management/Business-Process.md | reserved | 2026-11-25T16:27:54+07:00 | null | null | Owner approval "AI Office — Documentation Templates Phase 1"; baseline edf37a9dcb29bdd464c92e1a11d5e442a8bb11d1 |
-| TPL-009 | UAT Criteria | project-management | 05-Templates/Project-Management/UAT-Criteria.md | reserved | 2026-11-25T16:27:54+07:00 | null | null | Owner approval "AI Office — Documentation Templates Phase 1"; baseline edf37a9dcb29bdd464c92e1a11d5e442a8bb11d1 |
+| TPL-001 | Project Profile | project-management | 05-Templates/Project-Management/Project-Profile.md | allocated | 2026-11-25T16:27:54+07:00 | 2026-11-25T16:34:01+07:00 | null | Owner approval "AI Office — Documentation Templates Phase 1"; baseline edf37a9dcb29bdd464c92e1a11d5e442a8bb11d1 |
+| TPL-002 | Project Charter | project-management | 05-Templates/Project-Management/Project-Charter.md | allocated | 2026-11-25T16:27:54+07:00 | 2026-11-25T16:34:01+07:00 | null | Owner approval "AI Office — Documentation Templates Phase 1"; baseline edf37a9dcb29bdd464c92e1a11d5e442a8bb11d1 |
+| TPL-003 | Project Scope | project-management | 05-Templates/Project-Management/Project-Scope.md | allocated | 2026-11-25T16:27:54+07:00 | 2026-11-25T16:34:01+07:00 | null | Owner approval "AI Office — Documentation Templates Phase 1"; baseline edf37a9dcb29bdd464c92e1a11d5e442a8bb11d1 |
+| TPL-004 | Project Plan | project-management | 05-Templates/Project-Management/Project-Plan.md | allocated | 2026-11-25T16:27:54+07:00 | 2026-11-25T16:34:01+07:00 | null | Owner approval "AI Office — Documentation Templates Phase 1"; baseline edf37a9dcb29bdd464c92e1a11d5e442a8bb11d1 |
+| TPL-005 | Business Requirements | project-management | 05-Templates/Project-Management/Business-Requirements.md | allocated | 2026-11-25T16:27:54+07:00 | 2026-11-25T16:34:01+07:00 | null | Owner approval "AI Office — Documentation Templates Phase 1"; baseline edf37a9dcb29bdd464c92e1a11d5e442a8bb11d1 |
+| TPL-006 | Project Status Report | project-management | 05-Templates/Project-Management/Project-Status-Report.md | allocated | 2026-11-25T16:27:54+07:00 | 2026-11-25T16:34:01+07:00 | null | Owner approval "AI Office — Documentation Templates Phase 1"; baseline edf37a9dcb29bdd464c92e1a11d5e442a8bb11d1 |
+| TPL-007 | Project Closure Report | project-management | 05-Templates/Project-Management/Project-Closure-Report.md | allocated | 2026-11-25T16:27:54+07:00 | 2026-11-25T16:34:01+07:00 | null | Owner approval "AI Office — Documentation Templates Phase 1"; baseline edf37a9dcb29bdd464c92e1a11d5e442a8bb11d1 |
+| TPL-008 | Business Process | project-management | 05-Templates/Project-Management/Business-Process.md | allocated | 2026-11-25T16:27:54+07:00 | 2026-11-25T16:34:01+07:00 | null | Owner approval "AI Office — Documentation Templates Phase 1"; baseline edf37a9dcb29bdd464c92e1a11d5e442a8bb11d1 |
+| TPL-009 | UAT Criteria | project-management | 05-Templates/Project-Management/UAT-Criteria.md | allocated | 2026-11-25T16:27:54+07:00 | 2026-11-25T16:34:01+07:00 | null | Owner approval "AI Office — Documentation Templates Phase 1"; baseline edf37a9dcb29bdd464c92e1a11d5e442a8bb11d1 |
 
 ### Namespace lain
 
@@ -117,7 +119,7 @@ Namespace `PRJ`, `AGT`, `DEL`, `APR`, `REV`, dan lainnya **belum** punya entri d
 | Komponen | Status |
 |----------|--------|
 | Registry initialization (tanpa entri ID) | **Operational** untuk struktur field dan aturan; belum ada entri alokasi. |
-| Alokasi `TPL-*` aktual | **Belum ada.** |
+| Alokasi `TPL-*` aktual | 9 master Project Management (`TPL-001`–`TPL-009`) berstatus **allocated**. |
 | Automatic allocation | **Planned** — belum terverifikasi (GOV-002, GOV-008). |
 | Collision prevention otomatis | **Planned** — belum terverifikasi (GOV-008). |
 | Full-cycle locking / concurrency control | **Planned** — belum diimplementasikan (GOV-002). |
