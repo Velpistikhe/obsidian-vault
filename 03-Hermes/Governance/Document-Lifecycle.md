@@ -2,16 +2,16 @@
 title: Document Lifecycle
 document_id: GOV-004
 category: governance
-version: 0.2.0
-status: draft
+version: 1.0.0
+status: approved
 owner: owner
 author: hermes-default
-reviewer: null
-approved_by: null
-approved_at: null
+reviewer: owner
+approved_by: owner
+approved_at: 2026-11-25T07:55:03+07:00
 created_at: 2026-11-24
 updated_at: 2026-11-25
-tags: ['ai-office', 'governance', 'draft', 'lifecycle']
+tags: ['ai-office', 'governance', 'lifecycle']
 ---
 
 # Document Lifecycle
