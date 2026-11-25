@@ -88,12 +88,29 @@ Terpisah dari document lifecycle, project lifecycle, dan agent lifecycle (GOV-00
 
 ## Riwayat alokasi
 
-**Belum ada entri alokasi.** Tabel berikut sengaja dikosongkan — tidak ada ID yang reserved, allocated, atau retired.
+Entri hanya ditambahkan setelah alokasi aktual melalui workflow di atas dan mendapat otorisasi terpisah. Tabel tunggal berikut menjadi riwayat lengkap namespace `TPL`.
+
+### Project Management (Phase 1)
+
+Reservation dilakukan manual dan serial oleh pihak berwenang pada 2026-11-25, setelah sinkronisasi dan pemeriksaan namespace `TPL` (riwayat kosong pada saat itu).
+
+`authorization_reference` merujuk bukti otorisasi Owner yang dapat ditelusuri: **Approval Owner atas "AI Office — Documentation Templates Phase 1"**, dan baseline review `edf37a9dcb29bdd464c92e1a11d5e442a8bb11d1` (approved Template Foundation v1.0.0). Approval Registry dan `APR-NNNNNN` belum tersedia pada fase bootstrap, sehingga tidak ada approval ID yang dibuat.
 
 | template_id | title | category | path | allocation_status | reserved_at | allocated_at | retired_at | authorization_reference |
 |-------------|-------|----------|------|-------------------|-------------|--------------|------------|-------------------------|
+| TPL-001 | Project Profile | project-management | 05-Templates/Project-Management/Project-Profile.md | reserved | 2026-11-25T16:27:54+07:00 | null | null | Owner approval "AI Office — Documentation Templates Phase 1"; baseline edf37a9dcb29bdd464c92e1a11d5e442a8bb11d1 |
+| TPL-002 | Project Charter | project-management | 05-Templates/Project-Management/Project-Charter.md | reserved | 2026-11-25T16:27:54+07:00 | null | null | Owner approval "AI Office — Documentation Templates Phase 1"; baseline edf37a9dcb29bdd464c92e1a11d5e442a8bb11d1 |
+| TPL-003 | Project Scope | project-management | 05-Templates/Project-Management/Project-Scope.md | reserved | 2026-11-25T16:27:54+07:00 | null | null | Owner approval "AI Office — Documentation Templates Phase 1"; baseline edf37a9dcb29bdd464c92e1a11d5e442a8bb11d1 |
+| TPL-004 | Project Plan | project-management | 05-Templates/Project-Management/Project-Plan.md | reserved | 2026-11-25T16:27:54+07:00 | null | null | Owner approval "AI Office — Documentation Templates Phase 1"; baseline edf37a9dcb29bdd464c92e1a11d5e442a8bb11d1 |
+| TPL-005 | Business Requirements | project-management | 05-Templates/Project-Management/Business-Requirements.md | reserved | 2026-11-25T16:27:54+07:00 | null | null | Owner approval "AI Office — Documentation Templates Phase 1"; baseline edf37a9dcb29bdd464c92e1a11d5e442a8bb11d1 |
+| TPL-006 | Project Status Report | project-management | 05-Templates/Project-Management/Project-Status-Report.md | reserved | 2026-11-25T16:27:54+07:00 | null | null | Owner approval "AI Office — Documentation Templates Phase 1"; baseline edf37a9dcb29bdd464c92e1a11d5e442a8bb11d1 |
+| TPL-007 | Project Closure Report | project-management | 05-Templates/Project-Management/Project-Closure-Report.md | reserved | 2026-11-25T16:27:54+07:00 | null | null | Owner approval "AI Office — Documentation Templates Phase 1"; baseline edf37a9dcb29bdd464c92e1a11d5e442a8bb11d1 |
+| TPL-008 | Business Process | project-management | 05-Templates/Project-Management/Business-Process.md | reserved | 2026-11-25T16:27:54+07:00 | null | null | Owner approval "AI Office — Documentation Templates Phase 1"; baseline edf37a9dcb29bdd464c92e1a11d5e442a8bb11d1 |
+| TPL-009 | UAT Criteria | project-management | 05-Templates/Project-Management/UAT-Criteria.md | reserved | 2026-11-25T16:27:54+07:00 | null | null | Owner approval "AI Office — Documentation Templates Phase 1"; baseline edf37a9dcb29bdd464c92e1a11d5e442a8bb11d1 |
 
-Entri akan ditambahkan hanya setelah alokasi aktual melalui workflow di atas dan mendapat otorisasi terpisah.
+### Namespace lain
+
+Namespace `PRJ`, `AGT`, `DEL`, `APR`, `REV`, dan lainnya **belum** punya entri di registry ini; registry ini hanya mengelola namespace `TPL`.
 
 ## Status implementasi
 
