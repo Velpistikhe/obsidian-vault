@@ -2,16 +2,16 @@
 title: Naming Conventions
 document_id: GOV-008
 category: governance
-version: 0.2.0
-status: draft
+version: 1.0.0
+status: approved
 owner: owner
 author: hermes-default
-reviewer: null
-approved_by: null
-approved_at: null
+reviewer: owner
+approved_by: owner
+approved_at: 2026-11-25T08:58:26+07:00
 created_at: 2026-11-24
 updated_at: 2026-11-25
-tags: ['ai-office', 'governance', 'draft', 'naming']
+tags: ['ai-office', 'governance', 'naming']
 ---
 
 # Naming Conventions
@@ -20,7 +20,7 @@ tags: ['ai-office', 'governance', 'draft', 'naming']
 
 Konvensi penamaan file, folder, identifier organisasi, metadata, dan tag untuk konsistensi vault AI Office. Organizational ID melengkapi — **tidak menggantikan** — native ID sistem (Kanban, GitHub Issues/PR, Git commits, technical ADR di repo).
 
-Dokumen ini **draft**. Contoh ID ilustratif; bukan alokasi aktual. Mekanisme alokasi terpusat dan pencegahan collision otomatis **belum** dianggap operasional kecuali diverifikasi terpisah.
+Contoh ID dalam dokumen ini bersifat ilustratif; bukan alokasi aktual. Automatic allocation dan concurrency enforcement tetap **Planned** atau belum terverifikasi ([[Information-Architecture]]).
 
 ## Organizational Identifiers
 
@@ -47,6 +47,46 @@ Aturan umum ID organisasi:
 - Dialokasikan melalui **mekanisme terpusat** oleh pihak berwenang (Owner atau delegate yang ditetapkan).
 
 Sebelum alokasi: **periksa namespace dan registry** yang berlaku. Jangan mengklaim **collision prevention otomatis** telah tersedia — validasi metadata dan registry terpusat masih **Planned** ([[Agent-Access-Policy]], [[Information-Architecture]]).
+
+### Centralized ID allocation (manual workflow)
+
+Alokasi ID organisasi dilakukan secara **manual** oleh pihak berwenang melalui alur berikut:
+
+```text
+Request → Authorization → Synchronize → Namespace Check → Allocate → Register → Publish → Verify
+```
+
+| Tahap | Kegiatan |
+|-------|----------|
+| Request | Permintaan alokasi ID dengan jenis entitas dan konteks. |
+| Authorization | Persetujuan pihak berwenang sebelum alokasi. |
+| Synchronize | Sinkronisasi knowledge base ([[Knowledge-Management-Policy]]) sebelum membaca/menulis registry. |
+| Namespace Check | Periksa ID **reserved**, **allocated**, dan **retired** dalam namespace yang berlaku. |
+| Allocate | Berikan nomor berikutnya secara **serial**; jangan gunakan ID yang pernah dialokasikan untuk entitas berbeda. |
+| Register | Catat entri di registry otoritatif setelah alokasi. |
+| Publish | Publikasi terotorisasi ke knowledge base bila diperlukan. |
+| Verify | Verifikasi konsistensi registry dan tidak adanya duplikasi. |
+
+Aturan:
+
+- Alokasi dilakukan **serial** oleh pihak berwenang; tidak ada automatic allocation yang dianggap operasional.
+- Periksa ID reserved, allocated, dan retired **sebelum** mengalokasikan nomor berikutnya.
+- **Jangan** menggunakan ID yang pernah dialokasikan untuk entitas berbeda (non-reusable).
+- Jika terjadi duplicate ID, konflik Git, atau ketidakpastian registry, **hentikan** registrasi sampai diselesaikan.
+- Standar ini **tidak** membuat registry atau mengalokasikan ID aktual.
+
+### Identifier lifecycle
+
+Status **identifier** terpisah dari project lifecycle, document lifecycle, dan agent lifecycle:
+
+| Status | Makna |
+|--------|--------|
+| `reserved` | ID dicadangkan; registrasi entitas belum selesai. |
+| `allocated` | ID diberikan kepada entitas sah dan tercatat di registry. |
+| `retired` | ID tidak aktif; **tidak boleh** digunakan kembali untuk entitas lain. |
+
+- Pertahankan riwayat ID, termasuk reservation yang dibatalkan.
+- Pencabutan reservation tidak menghapus jejak historis dari registry.
 
 ### Native identifiers (dipertahankan)
 
@@ -82,6 +122,22 @@ Umum:
 
 **Jangan** melakukan mass rename terhadap resource existing tanpa otorisasi dan rencana migrasi terpisah.
 
+### Naming exceptions
+
+Konvensi penamaan organisasi **tidak** dipaksakan pada kategori berikut:
+
+| Kategori | Contoh / catatan |
+|----------|------------------|
+| File sistem dan kebijakan inti | `README.md`, `SOUL.md`, `HERMES.md`, `SKILL.md`, dan nama khusus sistem yang telah ditetapkan. |
+| Hermes profile (native) | Profile existing termasuk `default` — nama native profil tetap `default`. |
+| Identitas author organisasi | `hermes-default` dapat menjadi organizational author identity pada metadata governance; berbeda dari nama profile native. |
+| File konfigurasi | Mengikuti konvensi aplikasi atau tool yang bersangkutan. |
+| Source code | Mengikuti standar bahasa dan konvensi proyek di GitHub Project Repository. |
+| Laporan/snapshot bertanggal | Nama file boleh menyertakan tanggal bila tanggal merupakan bagian identitas artefak. |
+| Revision proposal | Menggunakan prefix `proposal_id` pada metadata; lihat bagian Revision Proposal. |
+
+Standar ini **tidak** mengotorisasi rename aktual terhadap resource existing.
+
 ## Metadata Standard
 
 ### Core document metadata (governance dan shared knowledge)
@@ -104,6 +160,16 @@ Selaras [[Document-Lifecycle]] (GOV-004):
 | `updated_at` | Ya | — | `YYYY-MM-DD`; pembaruan terakhir dokumen. |
 | `tags` | Disarankan | — | Array lowercase-hyphenated. |
 
+**Core metadata requirements:**
+
+- Dokumen terkelola yang menggunakan organizational identifier **wajib** memiliki `document_id` di YAML frontmatter.
+- Core metadata mengikuti [[Document-Lifecycle]] (GOV-004).
+- Untuk dokumen **draft**: `approved_by` dan `approved_at` harus **`null`**.
+- Untuk dokumen **approved**: `approved_by` dan `approved_at` **wajib** terisi berdasarkan approval sah.
+- `reviewer` mengikuti lifecycle dan otorisasi yang berlaku; reviewer bukan otomatis approver.
+- Native resources (issue GitHub, task Kanban, commit) dan temporary working drafts **tidak** dipaksa menggunakan seluruh core metadata.
+- Pertahankan context-specific metadata sesuai jenis entitas (lihat tabel di bawah).
+
 ### Context-specific metadata
 
 Entity records dapat memiliki field tambahan sesuai jenis; jangan memaksakan seluruh core metadata pada native system resources (issue GitHub, task Kanban, commit):
@@ -118,25 +184,31 @@ Entity records dapat memiliki field tambahan sesuai jenis; jangan memaksakan sel
 | Workflow / SOP | `workflow_id` / `sop_id`, `version`, `supersedes`. |
 | Revision proposal | Lihat bagian Revision Proposal. |
 
-Schema validation otomatis — **Planned**; metadata tetap mengikuti konvensi ini secara manual saat draft/review.
-
-Setiap dokumen governance memuat `document_id` di YAML frontmatter.
+Schema validation otomatis — **Planned**; metadata mengikuti konvensi ini secara manual sampai validasi otomatis terverifikasi.
 
 ## Revision Proposal
 
 Usulan revisi dokumen **approved** bukan kebijakan otoritatif. Versi approved sebelumnya tetap berlaku sampai pengganti disetujui ([[Document-Lifecycle]]).
 
-### Metadata proposal (konseptual)
+### Metadata proposal
 
-| Field | Makna |
-|-------|--------|
-| `proposal_id` | Identitas unik proposal (`REV-NNNNNN` atau setara dalam nama file). |
-| `document_type` | `revision_proposal` |
-| `document_id` | Referensi ke dokumen resmi yang diusulkan direvisi. |
-| `base_version` | Versi approved yang menjadi dasar. |
-| `target_version` | Versi yang dituju setelah approval. |
-| `status` | Mengikuti document lifecycle proposal (biasanya `draft`). |
-| `approved_by` / `approved_at` | `null` sampai proposal disetujui; publikasi final menggantikan file resmi hanya setelah otorisasi. |
+| Field | Wajib | Makna |
+|-------|-------|--------|
+| `proposal_id` | Ya | Identitas unik proposal (`REV-NNNNNN`); **wajib** dan dicatat pada metadata — nama file bukan pengganti `proposal_id`. |
+| `document_type` | Ya | `revision_proposal` |
+| `document_id` | Ya | Referensi ke dokumen resmi yang diusulkan direvisi. |
+| `base_version` | Ya | Versi approved yang menjadi dasar. |
+| `target_version` | Ya | Versi yang dituju setelah approval. |
+| `status` | Ya | Mengikuti document lifecycle proposal. |
+| `approved_by` / `approved_at` | — | `null` sampai proposal disetujui; setelah approval, terisi sesuai keputusan sah. |
+
+### Penerapan proposal approved
+
+Sebelum menerapkan proposal yang disetujui ke file resmi:
+
+1. Verifikasi `base_version` terhadap versi resmi terakhir dokumen target.
+2. Jika baseline berubah sejak proposal disusun, **hentikan** penerapan.
+3. Lakukan evaluasi ulang dan approval baru apabila diperlukan.
 
 ### Penamaan file proposal
 
@@ -146,17 +218,15 @@ Contoh ilustratif:
 REV-000001-AI-Office-Charter.md
 ```
 
-Lokasi proposal governance yang diusulkan (belum dibuat dalam revisi ini):
+Lokasi target proposal governance (belum dibuat kecuali diotorisasi):
 
 ```text
 03-Hermes/Governance/Proposals/
 ```
 
-Tugas revisi GOV-008 **tidak** membuat folder `Proposals/` atau file proposal aktual.
+Standar ini **tidak** membuat folder `Proposals/` atau file proposal aktual.
 
 ## Date & Time Conventions
-
-Standar ini merupakan bagian dari dokumen draft dan belum dianggap sebagai kebijakan yang disetujui.
 
 - Zona waktu organisasi: `Asia/Jakarta`.
 - Zona waktu server: `UTC`.
@@ -186,8 +256,8 @@ TZ=Asia/Jakarta date --iso-8601=seconds
 
 ## Tag
 
-- Lowercase, hyphenated: `ai-office`, `governance`, `draft`.
-- Tambah tag domain: `architecture`, `agents`, `projects`, dll.
+- Lowercase, hyphenated: `ai-office`, `governance`.
+- Tambah tag domain: `architecture`, `agents`, `projects`, `naming`, dll.
 
 ## Dokumen terkait
 
