@@ -9,7 +9,7 @@ reviewer: owner
 approved_by: owner
 approved_at: 2026-11-25T16:22:31+07:00
 created_at: 2026-11-25
-updated_at: 2026-11-25
+updated_at: 2026-11-26
 tags: ['ai-office', 'templates', 'registry']
 ---
 
@@ -121,6 +121,22 @@ Reservation dilakukan manual dan serial oleh pihak berwenang pada 2026-11-25, se
 | template_id | title | category | path | allocation_status | reserved_at | allocated_at | retired_at | authorization_reference |
 |-------------|-------|----------|------|-------------------|-------------|--------------|------------|-------------------------|
 | TPL-010 | Revision Proposal | knowledge-management | 05-Templates/Knowledge-Management/Revision-Proposal.md | allocated | 2026-11-25T21:41:07+07:00 | 2026-11-25T21:43:29+07:00 | null | 03-Hermes/Governance/Authorization-Evidence/Template-Phase-2-Authorization.md (recorded_at 2026-11-25T21:40:15+07:00; baseline 9510257493e78f0e107449e6d069f4b2e5f2358a) |
+
+### Agent Management (Phase 3)
+
+Reservation dilakukan manual dan serial oleh pihak berwenang pada 2026-11-26, setelah sinkronisasi dan pemeriksaan namespace `TPL` (terisi `TPL-001`–`TPL-010` pada saat itu; `TPL-011`–`TPL-017` tidak ditemukan di repository, registry, maupun riwayat Git).
+
+`authorization_reference` merujuk bukti otorisasi Owner Phase 3 yang telah dipublikasikan: `03-Hermes/Governance/Authorization-Evidence/Template-Phase-3-Authorization.md` (recorded_at 2026-11-26T12:15:05+07:00; baseline `8be443fd4a9f0390a458514f4f0e6b5f53ebbd3f`). Approval Registry dan `APR-NNNNNN` belum tersedia pada fase bootstrap, sehingga tidak ada approval ID yang dibuat.
+
+| template_id | title | category | path | allocation_status | reserved_at | allocated_at | retired_at | authorization_reference |
+|-------------|-------|----------|------|-------------------|-------------|--------------|------------|-------------------------|
+| TPL-011 | Agent Profile | agent-management | 05-Templates/Agent-Management/Agent-Profile.md | reserved | 2026-11-26T12:15:33+07:00 | null | null | 03-Hermes/Governance/Authorization-Evidence/Template-Phase-3-Authorization.md (recorded_at 2026-11-26T12:15:05+07:00; baseline 8be443fd4a9f0390a458514f4f0e6b5f53ebbd3f) |
+| TPL-012 | Agent Assignment | agent-management | 05-Templates/Agent-Management/Agent-Assignment.md | reserved | 2026-11-26T12:15:33+07:00 | null | null | 03-Hermes/Governance/Authorization-Evidence/Template-Phase-3-Authorization.md (recorded_at 2026-11-26T12:15:05+07:00; baseline 8be443fd4a9f0390a458514f4f0e6b5f53ebbd3f) |
+| TPL-013 | Delegation Record | agent-management | 05-Templates/Agent-Management/Delegation-Record.md | reserved | 2026-11-26T12:15:33+07:00 | null | null | 03-Hermes/Governance/Authorization-Evidence/Template-Phase-3-Authorization.md (recorded_at 2026-11-26T12:15:05+07:00; baseline 8be443fd4a9f0390a458514f4f0e6b5f53ebbd3f) |
+| TPL-014 | Approval Record | agent-management | 05-Templates/Agent-Management/Approval-Record.md | reserved | 2026-11-26T12:15:33+07:00 | null | null | 03-Hermes/Governance/Authorization-Evidence/Template-Phase-3-Authorization.md (recorded_at 2026-11-26T12:15:05+07:00; baseline 8be443fd4a9f0390a458514f4f0e6b5f53ebbd3f) |
+| TPL-015 | Agent Execution Report | agent-management | 05-Templates/Agent-Management/Agent-Execution-Report.md | reserved | 2026-11-26T12:15:33+07:00 | null | null | 03-Hermes/Governance/Authorization-Evidence/Template-Phase-3-Authorization.md (recorded_at 2026-11-26T12:15:05+07:00; baseline 8be443fd4a9f0390a458514f4f0e6b5f53ebbd3f) |
+| TPL-016 | Agent Change Request | agent-management | 05-Templates/Agent-Management/Agent-Change-Request.md | reserved | 2026-11-26T12:15:33+07:00 | null | null | 03-Hermes/Governance/Authorization-Evidence/Template-Phase-3-Authorization.md (recorded_at 2026-11-26T12:15:05+07:00; baseline 8be443fd4a9f0390a458514f4f0e6b5f53ebbd3f) |
+| TPL-017 | Agent Onboarding Checklist | agent-management | 05-Templates/Agent-Management/Agent-Onboarding-Checklist.md | reserved | 2026-11-26T12:15:33+07:00 | null | null | 03-Hermes/Governance/Authorization-Evidence/Template-Phase-3-Authorization.md (recorded_at 2026-11-26T12:15:05+07:00; baseline 8be443fd4a9f0390a458514f4f0e6b5f53ebbd3f) |
 
 ### Namespace lain
 
