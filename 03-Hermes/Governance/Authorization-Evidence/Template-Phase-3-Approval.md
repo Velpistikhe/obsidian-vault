@@ -29,6 +29,8 @@ Metadata frontmatter di atas menggambarkan **status dokumen record ini sendiri**
 
 Supporting evidence **bukan** independent identity authentication.
 
+> **Remediation (Stage 1):** Koreksi pada dokumen ini adalah **koreksi pencatatan** traceability dan governance compatibility — **bukan** keputusan Owner baru.
+
 ## 1. Approval details
 
 | Field | Nilai |
@@ -38,8 +40,8 @@ Supporting evidence **bukan** independent identity authentication.
 | `recorded_at` | 2026-11-26T16:53:53+07:00 |
 | Expected baseline | `78c3ee5885beebf80ae15f650e843fe3d54a9232` |
 | Evidence source | Instruksi Owner yang diterima pada tugas **AI Office — Phase 3 Finalization Stage 1** |
-| Validity | **Terbatas pada Stage 1 finalization Phase 3** dan ruang lingkup yang ditetapkan di bagian 3 |
-| Stage | Stage 1 dari empat tahap finalisasi — **tidak** mencakup penerapan koreksi master |
+| Validity | Keputusan Owner (bagian 2) mencakup **AM-C01**–**AM-C45**, **AD-01**–**AD-08**, dan target finalisasi **TPL-011**–**TPL-017**; otorisasi **pelaksanaan** Stage 1 terbatas pada persiapan dan publikasi bukti approval (bagian 3) — **bukan** implementasi infrastruktur atau otoritas runtime |
+| Stage | Stage 1 dari empat tahap finalisasi — **tidak** mencakup penerapan koreksi master; Stage 2–4 memerlukan instruksi pelaksanaan terpisah |
 
 ## 2. Owner decision (kutipan eksplisit)
 
@@ -63,7 +65,8 @@ Pernyataan tersebut menjadi dasar pencatatan bukti approval master Agent Managem
 |-------|-------|
 | Resource | Tujuh master template di `05-Templates/Agent-Management/` (`TPL-011`–`TPL-017`) |
 | Authorized correction scope | **AM-C01**–**AM-C45** (dicatat sebagai approved correction scope; **belum** diterapkan pada Stage 1) |
-| Authorized action (Stage 1) | Pencatatan dan publikasi bukti approval Owner; **tidak** menerapkan koreksi master atau finalisasi metadata master ke `approved` v1.0.0 |
+| Authorized action (Stage 1) | Pencatatan dan publikasi bukti approval Owner; **tidak** menerapkan koreksi master atau finalisasi metadata master ke `approved` v1.0.0; **tidak** memberikan otoritas implementasi infrastruktur atau runtime |
+| Execution authorization | Stage 1 = evidence preparation dan publication saja; bukti ini dapat menjadi **referensi keputusan** untuk tahap berikutnya setelah scope dan baseline diverifikasi pada masing-masing tahap |
 | Target end state (post-Stage) | Finalisasi ketujuh master menjadi `version: "1.0.0"`, `status: approved` setelah tahap berikutnya yang diotorisasi |
 | Scope | Baseline `78c3ee5885beebf80ae15f650e843fe3d54a9232` — Stage 1 saja |
 | Constraints | Master tetap `draft` v0.1.0 pada Stage 1; tidak mengalokasikan AGT, DEL, APR, REV, atau identifier baru; tidak membuat registry atau folder instance; tidak mengubah GOV-001–008, Template Registry, Template Standard, atau Authorization Evidence existing |
@@ -97,14 +100,16 @@ Stage 1 **tidak** mencakup:
 
 | ID | Keputusan Owner | Klasifikasi compatibility |
 |----|-----------------|---------------------------|
-| AD-01 | Hybrid centralized architecture untuk agent management storage | Owner-approved implementation design, **not implemented** — selaras arah GOV-002 (vault SSOT untuk agent registry); struktur folder detail belum ada dalam governance approved |
-| AD-02 | Folder per `AGT` di bawah Agent-Registry | Owner-approved implementation design, **not implemented** — memerlukan registry/infrastructure terpisah (GOV-008: alokasi manual, registry belum tersedia) |
-| AD-03 | Approval dan Delegation terpusat di `03-Hermes/Governance/` | Owner-approved implementation design, **not implemented** — GOV-005 mengatur delegasi/approval tetapi registry path belum operational |
+| AD-01 | **Folder Identity** — folder agent menggunakan organizational `AGT` ID, bukan display name atau runtime profile name | Owner-approved implementation design, **not implemented** — selaras arah GOV-002 (vault SSOT untuk agent registry); GOV-008 memisahkan `profile_name` (kebab-case) dari organizational `agent_id` |
+| AD-02 | **Centralized Authority Records** — Approval Record dan Delegation Record disimpan terpusat sesuai desain penyimpanan governance target | Owner-approved implementation design, **not implemented** — GOV-005 mengatur delegasi/approval tetapi registry path belum operational |
+| AD-03 | **Agent Operational Records** — Assignment, Execution Report, Change Request, dan Onboarding records dikelompokkan berdasarkan agent; dokumen proyek menyimpan **referensi**, bukan duplikasi record | Owner-approved implementation design, **not implemented** — memerlukan registry/infrastructure terpisah (GOV-008: alokasi manual, registry belum tersedia) |
 | AD-04 | `document_id` = entity ID AGT/DEL/APR hanya jika GOV-008 memperbolehkan | **Conditional on governance clarification** — GOV-008 mendefinisikan field terpisah (`agent_id`, `delegation_id`, `approval_id`) tanpa menetapkan kesamaan wajib dengan `document_id` pada instance |
 | AD-05 | Path-based identity sebagai proposed design; penggunaan resmi menunggu basis governance sah | Owner-approved implementation design, **not implemented** — **compatible** dengan pola bootstrap Authorization Evidence; bukan active policy untuk entity records operasional |
 | AD-06 | Tiga registry terpisah (Agent, Delegation, Approval) sebagai allocation index | Owner-approved implementation design, **not implemented** — GOV-008 mendefinisikan namespace tetapi infrastruktur registry AGT/DEL/APR **belum tersedia** |
 | AD-07 | Selective documentation | **Compatible with existing governance** — GOV-003 dan GOV-002 memisahkan SSOT; tidak mewajibkan dokumentasi penuh untuk setiap artefak native |
 | AD-08 | Pertahankan Bootstrap Authorization Evidence sampai APR infrastructure terverifikasi | **Compatible with existing governance** — [[03-Hermes/Governance/Authorization-Evidence/README]] approved; transisi ke APR menunggu infrastructure dan otorisasi Owner |
+
+**AD-01–AD-03** membentuk **hybrid centralized architecture**. Ketiganya merupakan Owner-approved implementation design, **not implemented**.
 
 **Tidak ada material conflict** yang menghalangi publikasi bukti Stage 1 dengan pembatasan governance yang dicatat di bawah.
 
@@ -177,6 +182,15 @@ Desain berikut adalah **Owner-approved target design**, subject to governance co
 | `03-Hermes/Governance/Approvals/Approval-Registry.md` | Approval registry |
 | `03-Hermes/Governance/Approvals/{Approval-ID}.md` | Approval record instance |
 
+Penjelasan desain:
+
+- Record operasional organizational dikelompokkan berdasarkan **Agent ID** (`{Agent-ID}` pada path tabel di atas).
+- Dokumen proyek hanya menyimpan **referensi relevan**, bukan duplikasi record operasional agent.
+- Approval Record dan Delegation Record disimpan **terpusat** di `03-Hermes/Governance/`.
+- Setiap registry merupakan **allocation index** dan **authoritative record reference**, bukan pengganti SSOT entitas.
+- Bukti engineering tetap mengikuti **GitHub Project Repository SSOT** sesuai [[03-Hermes/Governance/Information-Architecture|Information Architecture]] (GOV-002).
+- Desain penyimpanan di atas **belum diimplementasikan** pada Stage 1 — tidak ada folder atau registry yang dibuat.
+
 ## 7. Governance compatibility findings
 
 ### GOV-008 — temuan berdasarkan teks approved v1.0.0
@@ -186,13 +200,21 @@ Desain berikut adalah **Owner-approved target design**, subject to governance co
 | `document_id` dan `agent_id` | GOV-008 memisahkan core `document_id` dari field kontekstual `agent_id` pada Agent registry; **tidak** menetapkan bahwa keduanya harus sama pada instance. | «Entity records dapat memiliki field tambahan… **Agent registry** \| `agent_id`, `profile_name`, `activation_status`» (GOV-008, Context-specific metadata). «Dokumen terkelola yang menggunakan organizational identifier **wajib** memiliki `document_id`» — tanpa aturan kesamaan dengan `agent_id`. |
 | `document_id` dan `delegation_id` | Field `delegation_id` dicantumkan terpisah dari `document_id`; tidak ada aturan kesamaan wajib. | «**Delegation** \| `delegation_id`, `granted_by`, `granted_to`, `valid_from`, `valid_until`» (GOV-008). |
 | `document_id` dan `approval_id` | Field `approval_id` dicantumkan terpisah; tidak ada aturan kesamaan wajib. | «**Approval** \| `approval_id`, `decision`, `requested_by`» (GOV-008). |
-| Path-only identity untuk supporting records | Supporting/foundation artifacts tanpa organizational ID menggunakan path sebagai identitas otoritatif — konsisten dengan Authorization Evidence dan Template foundation. | Authorization Evidence README: «Tidak memiliki `document_id`, `template_id`, atau APR identifier»; Template Standard: foundation «menggunakan **path vault** sebagai identitas». |
-| `granted_by` / `granted_to` vs `delegated_by` / `delegated_to` | GOV-008 mensyaratkan **`granted_by`, `granted_to`** pada Delegation metadata. Draft master `TPL-013` blueprint memakai **`delegated_by`** — divergence yang harus diselesaikan pada penerapan **AM-C14**, bukan active policy. | GOV-008: «`delegation_id`, **`granted_by`**, **`granted_to`**». TPL-013 blueprint: `delegated_by: null`. |
+| Path-only identity | GOV-008 **belum** menetapkan aturan umum path-only identity untuk seluruh supporting records. Path identity pada Bootstrap Authorization Evidence dan template foundation artifacts berlaku berdasarkan **ketentuan khusus** masing-masing mekanisme — preseden tersebut **tidak** otomatis menjadi dasar path identity untuk Assignment, Execution Report, Change Request, atau Onboarding Checklist. **AD-05** tetap Owner-approved proposed design; official use menunggu dasar governance yang sah. | Authorization Evidence README; Template Standard (foundation path identity). |
+| `granted_by` / `granted_to` vs `delegated_by` / `delegated_to` (**AM-C14**) | GOV-008 menggunakan **`granted_by`, `granted_to`** sebagai context-specific Delegation metadata. Master **`TPL-013`** akan diselaraskan pada **Stage 2**; **tidak** diperlukan governance amendment hanya untuk menyelaraskan terminology master dengan GOV-008. | GOV-008: «`delegation_id`, **`granted_by`**, **`granted_to`**». TPL-013 blueprint (Stage 1): `delegated_by: null`. |
 | Organizational identifier allocation | Alokasi manual, serial, melalui registry terpusat; AGT/DEL/APR/REV registry **belum tersedia** untuk semua namespace. | «Standar ini **tidak** membuat registry atau mengalokasikan ID aktual»; Template Registry: «Project (`PRJ`), Agent (`AGT`)… **belum tersedia** untuk semua namespace». |
 
 ### Usage restriction — `document_id` dan entity ID
 
-**Kesamaan `document_id` dengan `AGT-NNN`, `DEL-NNNNNN`, atau `APR-NNNNNN` tidak ditetapkan sebagai active policy.** Hingga GOV-008 atau amendment resmi mengklarifikasi, implementasi harus memperlakukan `document_id` instance sesuai jenis entitas (termasuk kemungkinan `null` atau pola terpisah) dan **`agent_id` / `delegation_id` / `approval_id` sebagai field kontekstual**.
+GOV-008 mendefinisikan `document_id` serta context-specific `agent_id`, `delegation_id`, dan `approval_id`, tetapi **belum** memberikan ketentuan eksplisit mengenai kesamaan identifier tersebut pada authoritative entity records.
+
+**Tidak ditetapkan** pada evidence ini (menunggu klarifikasi governance resmi):
+
+- `document_id` = entity ID (`AGT-NNN`, `DEL-NNNNNN`, `APR-NNNNNN`).
+- `document_id` boleh `null` pada **official instance**.
+- `document_id` menggunakan identifier terpisah tanpa dasar governance yang sah.
+
+Generated metadata **blueprint** pada master draft **boleh** memakai `null` sebagai placeholder draft. **Pembuatan official instance** harus ditunda apabila persyaratan identitas dan prasyarat alokasi identifier belum terselesaikan.
 
 ## 8. Pending governance improvements
 
@@ -200,16 +222,16 @@ Desain berikut adalah **Owner-approved target design**, subject to governance co
 |------|--------|---------|
 | GOV-008 — `document_id` semantics untuk AGT/DEL/APR instance | `pending_governance_improvement` | Klarifikasi apakah `document_id` boleh sama dengan entity ID, wajib berbeda, atau nullable; resolusi melalui Revision Proposal workflow |
 | GOV-008 — path-based revision support (beyond TPL-010 precedent) | `pending_governance_improvement` | Phase 2 membatasi TPL-010 untuk target dengan organizational ID; perlu amendment untuk entity/path targets |
-| Supporting record identity rules (operational) | `implementation_prerequisite` | AD-05 approved sebagai design; basis governance resmi belum ada |
-| Agent operational lifecycle | `pending_verification` | `activation_status` di GOV-008 / Template Standard; enforcement runtime belum terverifikasi |
+| Supporting record identity rules (operational) | `implementation_prerequisite` | AD-05 approved sebagai proposed design; official use menunggu basis governance yang sah — **bukan** active path-only policy untuk entity operasional |
+| Agent operational lifecycle | `pending_capability_verification` | Definisi lifecycle agent di GOV-008 / Template Standard **belum** lengkap; **tidak** disamakan dengan verifikasi enforcement runtime (lihat baris `runtime access enforcement`) |
 | AGT/DEL/APR/REV allocation infrastructure | `implementation_prerequisite` | Registry dan allocation index belum dibuat (AD-06) |
 | Kanban integration | `pending_verification` | GOV-002: Hermes Kanban Integration **Pending Verification** |
 | Individual agent memory isolation | `pending_verification` | GOV-002: **Pending Verification** |
 | Runtime access enforcement | `planned` | GOV-002: **Planned** — bukan bukti enforcement operasional |
-| Delegation field naming (`granted_*` vs `delegated_*`) | `pending_governance_improvement` atau koreksi master | Selaraskan pada **AM-C14** dan/atau amendment GOV-008 bila diperlukan |
+| Delegation field naming — **AM-C14** (`granted_*` vs `delegated_*`) | `pending_governance_improvement` (master alignment) | **TPL-013** diselaraskan Stage 2; **tidak** diperlukan amendment GOV-008 hanya untuk terminology master |
 | APR infrastructure dan transisi dari bootstrap | `implementation_prerequisite` | AD-08: pertahankan bootstrap sampai APR terverifikasi dan transisi diotorisasi Owner |
 
-**Governance amendment yang diperlukan** (contoh: GOV-008 entity `document_id` rules) dibedakan dari **implementation prerequisite** (registry folders, allocation workflow) dan **pending verification** (runtime/Kanban).
+**Pending governance clarification** (contoh: GOV-008 entity `document_id` rules), **implementation prerequisite** (registry folders, allocation workflow), dan **pending capability verification** (runtime/Kanban/memori) saling dibedakan — lifecycle operasional agent **tidak** disamakan dengan bukti enforcement runtime.
 
 ## 9. Governance limitations (Stage 1)
 
