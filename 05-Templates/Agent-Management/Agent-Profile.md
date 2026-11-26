@@ -15,6 +15,7 @@ created_at: 2026-11-26
 updated_at: 2026-11-26
 tags: ['ai-office', 'templates', 'agents', 'profile']
 ---
+
 # Agent Profile
 
 ## 1. Purpose
