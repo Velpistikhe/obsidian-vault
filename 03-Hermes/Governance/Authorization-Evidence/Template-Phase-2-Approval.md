@@ -1,16 +1,16 @@
 ---
 title: Template Phase 2 Approval
 category: governance
- version: "0.1.0"
- status: draft
- owner: owner
- author: hermes-default
- reviewer: null
- approved_by: null
- approved_at: null
- created_at: 2026-11-26
- updated_at: 2026-11-26
- tags: ['ai-office', 'governance', 'authorization-evidence', 'phase-2', 'approval']
+version: "0.1.0"
+status: draft
+owner: owner
+author: hermes-default
+reviewer: null
+approved_by: null
+approved_at: null
+created_at: 2026-11-26
+updated_at: 2026-11-26
+tags: ['ai-office', 'governance', 'authorization-evidence', 'phase-2', 'approval']
 ---
 
 # Template Phase 2 Approval
